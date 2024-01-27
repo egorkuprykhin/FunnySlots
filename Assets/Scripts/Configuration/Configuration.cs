@@ -6,11 +6,18 @@ namespace FunnySlots
     public class Configuration : ScriptableObject
     {
         public Vector2Int FieldSize;
-        public Vector2 CardsOffset;
+        public Vector2 CellSize;
+        
         public float CameraPadding;
-        public int MinRollingCardsCount;
+
+        public Vector2 CardMoveSpeed;
+        public int MinCardsInRow;
+
         public Vector2 RollingTimeRange;
         public Vector2 StoppingTimeRange;
+
+
+        [Header("Prefabs")]
         public CardView CardView;
     }
 }

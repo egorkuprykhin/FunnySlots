@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Leopotam.EcsLite.Unity.Ugui;
 using UnityEngine;
 
 namespace FunnySlots {
@@ -9,6 +10,7 @@ namespace FunnySlots {
 
         public Configuration Configuration;
         public SceneData SceneData;
+        public EcsUguiEmitter UguiEmitter;
 
         void Start () {
             _world = new EcsWorld ();
@@ -17,6 +19,11 @@ namespace FunnySlots {
                 // register your systems here, for example:
                 .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
+                .Add (new MoveCardSystem ())
+                .Add (new CardsWatcherSystem ())
+                .Add (new SpawnCardsSystem ())
+                .Add (new InputHandlerSystem ())
+                
                 
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
@@ -27,6 +34,7 @@ namespace FunnySlots {
 #endif
                 
                 .Inject(Configuration, SceneData)
+                .InjectUgui(UguiEmitter)
                 
                 .Init ();
         }

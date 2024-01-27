@@ -12,9 +12,11 @@ namespace FunnySlots
         public void Init(IEcsSystems systems)
         {
             Camera camera = _sceneData.Value.MainCamera;
-            camera.orthographic = true;
             Configuration configuration = _configuration.Value;
-            camera.orthographicSize = configuration.CardsOffset.x * (1 + configuration.FieldSize.x) + 2 * configuration.CameraPadding;
+
+            camera.orthographic = true;
+            camera.orthographicSize = 
+                configuration.CellSize.x * (configuration.FieldSize.x + 1) + configuration.CameraPadding * 2;
         }
     }
 }
