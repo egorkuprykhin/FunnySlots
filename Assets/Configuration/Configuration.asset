@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb1a51dd0f4439fa6d52e4f7187ddbc, type: 3}
   m_Name: Configuration
   m_EditorClassIdentifier: 
-  FieldSize: {x: 5, y: 3}
+  FieldSize: {x: 10, y: 3}
   CardsOffset: {x: 3, y: 3}
+  CameraPadding: 1
   MinRollingCardsCount: 10
   RollingTimeRange: {x: 1.5, y: 3}
   StoppingTimeRange: {x: 0.1, y: 1}

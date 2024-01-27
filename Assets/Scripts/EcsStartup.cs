@@ -7,7 +7,8 @@ namespace FunnySlots {
         EcsWorld _world;        
         IEcsSystems _systems;
 
-        public Configuration configuration;
+        public Configuration Configuration;
+        public SceneData SceneData;
 
         void Start () {
             _world = new EcsWorld ();
@@ -15,7 +16,7 @@ namespace FunnySlots {
             _systems
                 // register your systems here, for example:
                 .Add (new InitWorldSystem ())
-                // .Add (new TestSystem2 ())
+                .Add (new InitCameraSystem ())
                 
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
@@ -25,7 +26,7 @@ namespace FunnySlots {
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
 #endif
                 
-                .Inject(configuration)
+                .Inject(Configuration, SceneData)
                 
                 .Init ();
         }
