@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 namespace FunnySlots
 {
-    public class InputHandlerSystem : IEcsInitSystem
+    public class HudPlayButtonReactSystem : IEcsInitSystem
     {
         [EcsUguiNamed("PlayButton")] Button PlayButton;
         
         private EcsWorldInject _world;
-        private EcsFilterInject<Inc<MovingState>> _filter;
-        private bool _subscribed;
+        private EcsFilterInject<Inc<CardMoving>> _filter;
 
         public void Init(IEcsSystems systems)
         {
@@ -22,8 +21,8 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                ref MovingState movingState = ref _world.Value.Get<MovingState>(entity);
-                movingState.IsMoving = !movingState.IsMoving;
+                ref CardMoving cardMoving = ref _world.Value.Get<CardMoving>(entity);
+                cardMoving.IsMoving = !cardMoving.IsMoving;
             }
         }
     }

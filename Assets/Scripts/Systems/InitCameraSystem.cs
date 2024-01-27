@@ -6,8 +6,8 @@ namespace FunnySlots
 {
     public class InitCameraSystem : IEcsInitSystem
     {
-        private readonly EcsCustomInject<Configuration> _configuration = default;
-        private readonly EcsCustomInject<SceneData> _sceneData = default;
+        private EcsCustomInject<Configuration> _configuration;
+        private EcsCustomInject<SceneData> _sceneData;
 
         public void Init(IEcsSystems systems)
         {

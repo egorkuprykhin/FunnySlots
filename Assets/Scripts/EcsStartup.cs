@@ -18,11 +18,13 @@ namespace FunnySlots {
             _systems
                 // register your systems here, for example:
                 .Add (new InitWorldSystem ())
+                .Add (new CreateCardViewsSystem ())
+                // .Add (new InitCardsSystem ())
                 .Add (new InitCameraSystem ())
                 .Add (new MoveCardSystem ())
+                .Add (new UpdatePositionSystem ())
                 .Add (new CardsWatcherSystem ())
-                .Add (new SpawnCardsSystem ())
-                .Add (new InputHandlerSystem ())
+                .Add (new HudPlayButtonReactSystem ())
                 
                 
                 // register additional worlds here, for example:

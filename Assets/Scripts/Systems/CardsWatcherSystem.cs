@@ -5,7 +5,7 @@ namespace FunnySlots
 {
     public class CardsWatcherSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<CardsRow>, Exc<CreateCardEvent>> _filter;
+        private EcsFilterInject<Inc<CardViewRef>, Exc<CreateCardEvent>> _filter;
         private EcsCustomInject<Configuration> _configuration;
         
         public void Run(IEcsSystems systems)
@@ -14,11 +14,11 @@ namespace FunnySlots
             
             foreach (int entity in _filter.Value)
             {
-                var cardsInRow = world.Get<CardsRow>(entity).ViewsInRow.Count;
-                if (cardsInRow < _configuration.Value.MinCardsInRow)
-                {
-                    world.Get<CreateCardEvent>(entity);
-                }
+                // var cardsInRow = world.Get<CardViewRef>(entity).ViewsInRow.Count;
+                // if (cardsInRow < _configuration.Value.MinCardsInRow)
+                // {
+                    // world.Get<CreateCardEvent>(entity);
+                // }
             }
         }
     }

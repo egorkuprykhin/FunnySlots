@@ -13,5 +13,15 @@ namespace FunnySlots
                     
             return ref ecsPool.Add(entity);
         }
+        
+        public static void SetEvent<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
+        {
+            world.Get<TComponent>(entity);
+        }
+        
+        public static void RemoveEvent<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
+        {
+            world.GetPool<TComponent>().Del(entity);
+        }
     }
 }

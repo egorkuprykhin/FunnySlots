@@ -6,29 +6,25 @@ namespace FunnySlots
 {
     public class MoveCardSystem : IEcsRunSystem
     {
-        private readonly EcsWorldInject _world;
-        private readonly EcsFilterInject<Inc<CardViewRef, MovingState>> _filter;
+        private readonly EcsFilterInject<Inc<CardMoving, CardPosition>> _filter;
         private readonly EcsCustomInject<Configuration> _configuration;
+        private readonly EcsWorldInject _world;
 
         public void Run(IEcsSystems systems)
         {
             foreach (int entity in _filter.Value)
             {
-                ref MovingState movingState = ref _world.Value.Get<MovingState>(entity);
-                if (movingState.IsMoving) 
+                if (_world.Value.Get<CardMoving>(entity).IsMoving) 
                     Move(entity);
             }
         }
 
         private void Move(int entity)
         {
-            Transform cardViewTransform = _world.Value.Get<CardViewRef>(entity).Value.transform;
-            Vector3 position = cardViewTransform.position;
-                
-            Vector2 positionDelta = _configuration.Value.CardMoveSpeed * Time.deltaTime;
-            Vector3 nextPosition = new Vector3(position.x + positionDelta.x, position.y + positionDelta.y, 0);
-
-            cardViewTransform.position = nextPosition;
+            ref var initialPosition = ref _world.Value.Get<CardPosition>(entity).Position;
+            var deltaPosition  =  _configuration.Value.CardMoveSpeed * Time.deltaTime;
+            
+            initialPosition += deltaPosition;
         }
     }
 }
