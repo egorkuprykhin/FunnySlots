@@ -20,6 +20,7 @@ namespace FunnySlots
                 CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
 
                 _world.Value.Get<CardViewRef>(entity).Value = instance;
+                
                 _world.Value.RemoveEvent<CreateCardEvent>(entity);
             }
         }

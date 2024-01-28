@@ -11,15 +11,15 @@ namespace FunnySlots {
         public Configuration Configuration;
         public SceneData SceneData;
         public EcsUguiEmitter UguiEmitter;
+        
+        private SharedData _sharedData = new();
 
         void Start () {
             _world = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _systems = new EcsSystems (_world, _sharedData);
             _systems
-                // register your systems here, for example:
-                .Add (new InitWorldSystem ())
+                .Add (new CreateWorldSystem ())
                 .Add (new CreateCardViewsSystem ())
-                // .Add (new InitCardsSystem ())
                 .Add (new InitCameraSystem ())
                 .Add (new MoveCardSystem ())
                 .Add (new UpdatePositionSystem ())
