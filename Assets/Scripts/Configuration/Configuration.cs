@@ -10,7 +10,8 @@ namespace FunnySlots
         
         public float CameraPadding;
 
-        public int OutOfCellsToDestroy;
+        public int MaxOffsetToCreateCard;
+        public int MinOffsetToDestroyCard;
 
         public Vector2 CardMoveSpeed;
 

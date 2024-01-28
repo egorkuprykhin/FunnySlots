@@ -21,7 +21,7 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                ref CardMoving cardMoving = ref _world.Value.Get<CardMoving>(entity);
+                ref CardMoving cardMoving = ref entity.Get<CardMoving>(_world.Value);
                 cardMoving.IsMoving = !cardMoving.IsMoving;
             }
         }

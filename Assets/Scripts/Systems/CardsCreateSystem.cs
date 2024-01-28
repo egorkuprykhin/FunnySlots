@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public class CreateCardViewsSystem : IEcsRunSystem
+    public class CardsCreateSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<CardPosition, CreateCardEvent>, Exc<CardViewRef>> _filter;
+        private EcsFilterInject<Inc<CreateCardEvent, CardPosition>, Exc<CardViewRef>> _filter;
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
         
@@ -14,14 +14,14 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                Vector2 position = _world.Value.Get<CardPosition>(entity).Position;
+                Vector2 position = entity.Get<CardPosition>(_world.Value).Position;
                 
                 CardView cardPrefab = _configuration.Value.CardView;
                 CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
 
-                _world.Value.Get<CardViewRef>(entity).Value = instance;
+                entity.Get<CardViewRef>(_world.Value).CardView = instance;
                 
-                _world.Value.RemoveEvent<CreateCardEvent>(entity);
+                entity.Del<CreateCardEvent>(_world.Value);
             }
         }
     }

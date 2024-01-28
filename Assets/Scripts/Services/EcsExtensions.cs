@@ -4,7 +4,7 @@ namespace FunnySlots
 {
     public static class EcsExtensions
     {
-        public static ref TComponent Get<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
+        public static ref TComponent Get<TComponent>(this int entity, EcsWorld world) where TComponent : struct, IComponent
         {
             EcsPool<TComponent> ecsPool = world.GetPool<TComponent>();
             
@@ -14,7 +14,7 @@ namespace FunnySlots
             return ref ecsPool.Add(entity);
         }
         
-        public static void Set<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
+        public static void Set<TComponent>(this int entity, EcsWorld world) where TComponent : struct, IComponent
         {
             EcsPool<TComponent> ecsPool = world.GetPool<TComponent>();
             
@@ -22,12 +22,7 @@ namespace FunnySlots
                 ecsPool.Add(entity);
         }
         
-        public static void SetEvent<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
-        {
-            world.Get<TComponent>(entity);
-        }
-        
-        public static void RemoveEvent<TComponent>(this EcsWorld world, int entity) where TComponent : struct, IComponent
+        public static void Del<TComponent>(this int entity, EcsWorld world) where TComponent : struct, IComponent
         {
             world.GetPool<TComponent>().Del(entity);
         }

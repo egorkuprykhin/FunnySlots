@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4632413907491396682}
   - component: {fileID: 983129314610831027}
   m_Layer: 0
-  m_Name: HeartShine
+  m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

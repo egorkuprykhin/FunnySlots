@@ -14,14 +14,14 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                if (_world.Value.Get<CardMoving>(entity).IsMoving) 
+                if (entity.Get<CardMoving>(_world.Value).IsMoving) 
                     Move(entity);
             }
         }
 
         private void Move(int entity)
         {
-            ref var initialPosition = ref _world.Value.Get<CardPosition>(entity).Position;
+            ref var initialPosition = ref entity.Get<CardPosition>(_world.Value).Position;
             var deltaPosition  =  _configuration.Value.CardMoveSpeed * Time.deltaTime;
             
             initialPosition += deltaPosition;

@@ -4,16 +4,13 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public class CreateWorldSystem : IEcsInitSystem
+    public class InitializeWorldSystem : IEcsInitSystem
     {
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
         
         public void Init(IEcsSystems systems)
         {
-            SharedData shared = systems.GetShared<SharedData>();
-            shared.MinYCoordinate = _configuration.Value.CellSize.y * _configuration.Value.FieldSize.y * 2;
-            
             Vector2Int fieldSize = _configuration.Value.FieldSize;
             Vector2 cellSize = _configuration.Value.CellSize;
             
@@ -27,7 +24,7 @@ namespace FunnySlots
                     int cardEntity = CreateCardEntity(position, x);
                     
                     if (HighestByYCard(y))
-                        _world.Value.Set<HighestCardInRow>(cardEntity);
+                        cardEntity.Set<HighestCardInRow>(_world.Value);
                 }
 
             bool HighestByYCard(int y) => y >= fieldSize.y - 1;
@@ -37,10 +34,9 @@ namespace FunnySlots
         {
             int cardEntity = _world.Value.NewEntity();
             
-            _world.Value.Get<CardPosition>(cardEntity).Position = position;
-            _world.Value.Get<CardMoving>(cardEntity).IsMoving = false;
-            
-            _world.Value.SetEvent<CreateCardEvent>(cardEntity);
+            cardEntity.Get<CardPosition>(_world.Value).Position = position;
+            cardEntity.Get<CardMoving>(_world.Value).IsMoving = false;
+            cardEntity.Set<CreateCardEvent>(_world.Value);
 
             return cardEntity;
         }
