@@ -21,5 +21,8 @@ namespace FunnySlots
 
         [Header("Prefabs")]
         public CardView CardView;
+
+        [Header("Cards")]
+        public CardsData CardsData;
     }
 }

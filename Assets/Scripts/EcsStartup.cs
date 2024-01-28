@@ -12,12 +12,18 @@ namespace FunnySlots {
         public SceneData SceneData;
         public EcsUguiEmitter UguiEmitter;
 
-        void Start () {
+        private CardsSpriteSelectorService _cardSpriteSelectionService;
+
+        void Start ()
+        {
+            _cardSpriteSelectionService = new CardsSpriteSelectorService(Configuration);
+            
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
             _systems
                 .Add (new InitializeWorldSystem ())
                 .Add (new InitCameraSystem ())
+                .Add (new SetCardsSpriteSystem ())
                 
                 .Add (new MoveCardSystem ())
                 .Add (new UpdatePositionSystem ())
@@ -40,6 +46,7 @@ namespace FunnySlots {
 #endif
                 
                 .Inject(Configuration, SceneData)
+                .Inject(_cardSpriteSelectionService)
                 .InjectUgui(UguiEmitter)
                 
                 .Init ();

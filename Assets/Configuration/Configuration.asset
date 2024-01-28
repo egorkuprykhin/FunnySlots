@@ -13,11 +13,39 @@ MonoBehaviour:
   m_Name: Configuration
   m_EditorClassIdentifier: 
   FieldSize: {x: 5, y: 3}
-  CellSize: {x: 3, y: 3}
-  CameraPadding: 10
+  CellSize: {x: 4, y: 4}
+  CameraPadding: 7
   MaxOffsetToCreateCard: 3
   MinOffsetToDestroyCard: 3
   CardMoveSpeed: {x: 0, y: -10}
   RollingTimeRange: {x: 1.5, y: 3}
   StoppingTimeRange: {x: 0.1, y: 1}
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
+  CardsData:
+    Cards:
+    - Id: Bar1
+      Sprite: {fileID: 21300000, guid: c740a51c680dd47fe993a66df2a849e6, type: 3}
+    - Id: Bar2
+      Sprite: {fileID: 21300000, guid: 769094bdd9e7a45598c5c6de40015b76, type: 3}
+    - Id: Bar3
+      Sprite: {fileID: 21300000, guid: 6fdb61334e35e48e9901a7f25f1247c5, type: 3}
+    - Id: Bell
+      Sprite: {fileID: 21300000, guid: 7a15ff0dc97b049e0b282bd574d99b2c, type: 3}
+    - Id: Cherry
+      Sprite: {fileID: 21300000, guid: 9b983cdecaee24556b2217440cfc22f6, type: 3}
+    - Id: Clever
+      Sprite: {fileID: 21300000, guid: 816eeff98f2af41debf0386ad05e151e, type: 3}
+    - Id: Heart
+      Sprite: {fileID: 21300000, guid: 1f342435ac18945febfa0c602744de22, type: 3}
+    - Id: Lemon
+      Sprite: {fileID: 21300000, guid: 76f826bd34757402580ae2a4675ded63, type: 3}
+    - Id: RainbowHeart
+      Sprite: {fileID: 21300000, guid: 4583832480f424506854ee26ae6f07a6, type: 3}
+    - Id: Seven
+      Sprite: {fileID: 21300000, guid: 582fdb9a1dd48449e8b06ee617cc895e, type: 3}
+    - Id: RainbowSeven
+      Sprite: {fileID: 21300000, guid: c6b6eac37d8c44084bd0a3467eab6851, type: 3}
+    - Id: U
+      Sprite: {fileID: 21300000, guid: db635939644ff442a9b50dadd664c7ca, type: 3}
+    - Id: Watermelon
+      Sprite: {fileID: 21300000, guid: dcd64d116eb374a609cdbb88bdcc1be7, type: 3}

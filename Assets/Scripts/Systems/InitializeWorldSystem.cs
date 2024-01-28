@@ -34,9 +34,10 @@ namespace FunnySlots
         {
             int cardEntity = _world.Value.NewEntity();
             
-            cardEntity.Get<CardPosition>(_world.Value).Position = position;
-            cardEntity.Get<CardMoving>(_world.Value).IsMoving = false;
-            cardEntity.Set<CreateCardEvent>(_world.Value);
+            cardEntity.Get<CardPosition>(_world).Position = position;
+            cardEntity.Get<CardMoving>(_world).IsMoving = false;
+            cardEntity.Set<CreateCardEvent>(_world);
+            cardEntity.Set<SetCardSpriteEvent>(_world);
 
             return cardEntity;
         }

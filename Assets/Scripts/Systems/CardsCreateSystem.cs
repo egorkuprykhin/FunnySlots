@@ -14,14 +14,14 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                Vector2 position = entity.Get<CardPosition>(_world.Value).Position;
+                Vector2 position = entity.Get<CardPosition>(_world).Position;
                 
                 CardView cardPrefab = _configuration.Value.CardView;
                 CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
 
-                entity.Get<CardViewRef>(_world.Value).CardView = instance;
+                entity.Get<CardViewRef>(_world).CardView = instance;
                 
-                entity.Del<CreateCardEvent>(_world.Value);
+                entity.Del<CreateCardEvent>(_world);
             }
         }
     }

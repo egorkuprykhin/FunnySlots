@@ -15,7 +15,7 @@ namespace FunnySlots
             foreach (int entity in _filter.Value)
             {
                 float valueMaxOffsetToCreateCard = _configuration.Value.MaxOffsetToCreateCard * _configuration.Value.CellSize.y;
-                ref Vector2 position = ref entity.Get<CardPosition>(_world.Value).Position;
+                ref Vector2 position = ref entity.Get<CardPosition>(_world).Position;
                 
                 if (position.y < valueMaxOffsetToCreateCard)
                 {
@@ -24,19 +24,21 @@ namespace FunnySlots
             }
         }
         
-        private void CreateCard(ref Vector2 position, int entity)
+        private void CreateCard(ref Vector2 position, int prevCardEntity)
         {
+            bool isMoving = prevCardEntity.Get<CardMoving>(_world).IsMoving;
             Vector2 createdPosition = position + new Vector2(0, _configuration.Value.CellSize.y);
-            bool isMoving = entity.Get<CardMoving>(_world.Value).IsMoving;
 
             int cardEntity = _world.Value.NewEntity();
+
+            cardEntity.Get<CardMoving>(_world).IsMoving = isMoving;
+            cardEntity.Get<CardPosition>(_world).Position = createdPosition;
+
+            cardEntity.Set<CreateCardEvent>(_world);
+            cardEntity.Set<SetCardSpriteEvent>(_world);
+            cardEntity.Set<HighestCardInRow>(_world);
             
-            cardEntity.Get<CardPosition>(_world.Value).Position = createdPosition;
-            cardEntity.Get<CardMoving>(_world.Value).IsMoving = isMoving;
-            cardEntity.Set<CreateCardEvent>(_world.Value);
-            cardEntity.Set<HighestCardInRow>(_world.Value);
-            
-            entity.Del<HighestCardInRow>(_world.Value);
+            prevCardEntity.Del<HighestCardInRow>(_world);
         }
     }
 }

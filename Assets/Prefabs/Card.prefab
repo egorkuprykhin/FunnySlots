@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 162561393513075357}
   - component: {fileID: 419683607112310712}
   m_Layer: 0
-  m_Name: HeartShine
+  m_Name: Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,3 +129,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594c3e8ed434488dbb746c189d286485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Renderer: {fileID: 419683607112310712}
