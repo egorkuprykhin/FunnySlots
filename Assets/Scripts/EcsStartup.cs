@@ -23,18 +23,20 @@ namespace FunnySlots {
             _systems
                 .Add (new InitializeWorldSystem ())
                 .Add (new InitCameraSystem ())
-                .Add (new SetCardsSpriteSystem ())
                 
-                .Add (new MoveCardSystem ())
-                .Add (new UpdatePositionSystem ())
+                .Add (new SetCardsSpriteSystem ())
+                .Add (new WatchHighestCardSystem ())
                 
                 .Add (new CardsToCreateWatcherSystem ())
                 .Add (new CardsCreateSystem ())
                 
+                .Add (new HudPlayButtonReactSystem ())
+                .Add (new MoveCardSystem ())
+                .Add (new UpdatePositionSystem ())
+                .Add (new StopRollingWatcherSystem ())
+                
                 .Add (new CardsToDestroyWatcherSystem ())
                 .Add (new CardsDestroySystem ())
-                
-                .Add (new HudPlayButtonReactSystem ())
                 
                 
                 // register additional worlds here, for example:

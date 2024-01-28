@@ -5,6 +5,11 @@ namespace FunnySlots
 {
     public static class EcsExtensions
     {
+        public static bool Has<TComponent>(this int entity, EcsWorldInject world) where TComponent : struct, IComponent
+        {
+            return world.Value.GetPool<TComponent>().Has(entity);
+        }
+        
         public static ref TComponent Get<TComponent>(this int entity, EcsWorldInject world) where TComponent : struct, IComponent
         {
             return ref entity.Get<TComponent>(world.Value);
@@ -41,6 +46,11 @@ namespace FunnySlots
         public static void Del<TComponent>(this int entity, EcsWorld world) where TComponent : struct, IComponent
         {
             world.GetPool<TComponent>().Del(entity);
+        }
+
+        public static int NewEntity(this EcsWorldInject world)
+        {
+            return world.Value.NewEntity();
         }
     }
 }

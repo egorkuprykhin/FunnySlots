@@ -6,7 +6,7 @@ namespace FunnySlots
 {
     public class CardsToDestroyWatcherSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<CardPosition, CardViewRef>, Exc<HighestCardInRow>> _filter;
+        private EcsFilterInject<Inc<CardPosition, CardViewRef>, Exc<HighestCardMarker>> _filter;
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
         

@@ -13,29 +13,25 @@ namespace FunnySlots
         {
             Vector2Int fieldSize = _configuration.Value.FieldSize;
             Vector2 cellSize = _configuration.Value.CellSize;
-            
-            for (int x = 0; x < fieldSize.x; x++)
-                for (int y = 0; y < fieldSize.y; y++)
-                {
-                    Vector2 position = new Vector2(
-                        cellSize.x * (x + 0.5f - 0.5f * fieldSize.x), 
-                        cellSize.y * (y + 0.5f - 0.5f * fieldSize.y));
-                    
-                    int cardEntity = CreateCardEntity(position, x);
-                    
-                    if (HighestByYCard(y))
-                        cardEntity.Set<HighestCardInRow>(_world.Value);
-                }
 
-            bool HighestByYCard(int y) => y >= fieldSize.y - 1;
+            for (int x = 0; x < fieldSize.x; x++)
+            for (int y = 0; y < fieldSize.y; y++)
+            {
+                Vector2 position = new Vector2(
+                    cellSize.x * (x + 0.5f - 0.5f * fieldSize.x),
+                    cellSize.y * (y + 0.5f - 0.5f * fieldSize.y));
+
+                CreateNewCardEntity(position);
+            }
         }
 
-        private int CreateCardEntity(Vector2 position, int row)
+        private int CreateNewCardEntity(Vector2 position)
         {
             int cardEntity = _world.Value.NewEntity();
             
             cardEntity.Get<CardPosition>(_world).Position = position;
             cardEntity.Get<CardMoving>(_world).IsMoving = false;
+            
             cardEntity.Set<CreateCardEvent>(_world);
             cardEntity.Set<SetCardSpriteEvent>(_world);
 

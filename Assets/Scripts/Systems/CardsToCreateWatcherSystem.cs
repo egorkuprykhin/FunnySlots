@@ -6,7 +6,8 @@ namespace FunnySlots
 {
     public class CardsToCreateWatcherSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<HighestCardInRow, CardPosition, CardMoving, CardViewRef>> _filter;
+        private EcsFilterInject<Inc<HighestCardMarker, CardPosition, CardMoving, CardViewRef>> _filter;
+        
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
 
@@ -23,7 +24,7 @@ namespace FunnySlots
                 }
             }
         }
-        
+
         private void CreateCard(ref Vector2 position, int prevCardEntity)
         {
             bool isMoving = prevCardEntity.Get<CardMoving>(_world).IsMoving;
@@ -36,9 +37,6 @@ namespace FunnySlots
 
             cardEntity.Set<CreateCardEvent>(_world);
             cardEntity.Set<SetCardSpriteEvent>(_world);
-            cardEntity.Set<HighestCardInRow>(_world);
-            
-            prevCardEntity.Del<HighestCardInRow>(_world);
         }
     }
 }
