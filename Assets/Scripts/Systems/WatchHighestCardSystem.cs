@@ -17,7 +17,7 @@ namespace FunnySlots
 
             foreach (int cardEntity in _cardPositions.Value)
             {
-                float cardPosY = cardEntity.Get<CardPosition>(_world).Position.y;
+                float cardPosY = cardEntity.Get<CardPosition>(_world).Value.y;
 
                 if (cardPosY > cardMaxPosY)
                     cardMaxPosY = cardPosY;
@@ -28,7 +28,7 @@ namespace FunnySlots
 
             foreach (int cardEntity in _cardPositions.Value)
             {
-                float cardPosY = cardEntity.Get<CardPosition>(_world).Position.y;
+                float cardPosY = cardEntity.Get<CardPosition>(_world).Value.y;
 
                 if (EqualsAround(cardPosY, cardMaxPosY))
                     cardEntity.Get<HighestCardMarker>(_world);

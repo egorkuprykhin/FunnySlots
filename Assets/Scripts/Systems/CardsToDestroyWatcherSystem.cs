@@ -15,7 +15,7 @@ namespace FunnySlots
             var minOffsetToDestroyCard = _configuration.Value.MinOffsetToDestroyCard * _configuration.Value.CellSize.y;
             foreach (int entity in _filter.Value)
             {
-                var position = entity.Get<CardPosition>(_world.Value).Position;
+                var position = entity.Get<CardPosition>(_world.Value).Value;
                 
                 if (Mathf.Abs(position.y) > minOffsetToDestroyCard)
                 {

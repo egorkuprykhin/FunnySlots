@@ -4,6 +4,6 @@ namespace FunnySlots
 {
     public struct CardPosition : IComponent
     {
-        public Vector2 Position;
+        public Vector2 Value;
     }
 }

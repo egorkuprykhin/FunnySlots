@@ -33,7 +33,9 @@ namespace FunnySlots {
                 .Add (new HudPlayButtonReactSystem ())
                 .Add (new MoveCardSystem ())
                 .Add (new UpdatePositionSystem ())
+                
                 .Add (new StopRollingWatcherSystem ())
+                .Add (new StopMovingSystem ())
                 
                 .Add (new CardsToDestroyWatcherSystem ())
                 .Add (new CardsDestroySystem ())

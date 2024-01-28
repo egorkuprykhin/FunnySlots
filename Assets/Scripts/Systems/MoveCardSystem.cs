@@ -21,7 +21,7 @@ namespace FunnySlots
 
         private void Move(int entity)
         {
-            ref var initialPosition = ref entity.Get<CardPosition>(_world.Value).Position;
+            ref var initialPosition = ref entity.Get<CardPosition>(_world.Value).Value;
             var deltaPosition  =  _configuration.Value.CardMoveSpeed * Time.deltaTime;
             
             initialPosition += deltaPosition;

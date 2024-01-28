@@ -16,7 +16,7 @@ namespace FunnySlots
             foreach (int entity in _filter.Value)
             {
                 float valueMaxOffsetToCreateCard = _configuration.Value.MaxOffsetToCreateCard * _configuration.Value.CellSize.y;
-                ref Vector2 position = ref entity.Get<CardPosition>(_world).Position;
+                ref Vector2 position = ref entity.Get<CardPosition>(_world).Value;
                 
                 if (position.y < valueMaxOffsetToCreateCard)
                 {
@@ -33,7 +33,7 @@ namespace FunnySlots
             int cardEntity = _world.Value.NewEntity();
 
             cardEntity.Get<CardMoving>(_world).IsMoving = isMoving;
-            cardEntity.Get<CardPosition>(_world).Position = createdPosition;
+            cardEntity.Get<CardPosition>(_world).Value = createdPosition;
 
             cardEntity.Set<CreateCardEvent>(_world);
             cardEntity.Set<SetCardSpriteEvent>(_world);

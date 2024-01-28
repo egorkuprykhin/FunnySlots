@@ -13,7 +13,7 @@ namespace FunnySlots
             foreach (int entity in _filter.Value)
             {
                 entity.Get<CardViewRef>(_world.Value).CardView.transform.position =
-                    entity.Get<CardPosition>(_world.Value).Position;
+                    entity.Get<CardPosition>(_world.Value).Value;
             }
         }
     }

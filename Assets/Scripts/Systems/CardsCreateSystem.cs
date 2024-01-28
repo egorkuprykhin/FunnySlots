@@ -14,7 +14,7 @@ namespace FunnySlots
         {
             foreach (int entity in _filter.Value)
             {
-                Vector2 position = entity.Get<CardPosition>(_world).Position;
+                Vector2 position = entity.Get<CardPosition>(_world).Value;
                 
                 CardView cardPrefab = _configuration.Value.CardView;
                 CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
