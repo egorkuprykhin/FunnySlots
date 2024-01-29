@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb1a51dd0f4439fa6d52e4f7187ddbc, type: 3}
   m_Name: Configuration
   m_EditorClassIdentifier: 
-  FieldSize: {x: 5, y: 3}
+  FieldSize: {x: 3, y: 2}
   CellSize: {x: 4, y: 4}
+  ExtraCells: {x: 0, y: 3}
   CameraPadding: 7
   MaxOffsetToCreateCard: 3
-  MinOffsetToDestroyCard: 3
-  CardMoveSpeed: {x: 0, y: -10}
-  RollingTimeRange: {x: 1.5, y: 3}
-  StoppingTimeRange: {x: 0.1, y: 1}
+  CellsOffsetToDestroyCard: 3
+  CardMoveSpeed: {x: 0, y: -2}
+  RollingTimeRange: {x: 1, y: 1.2}
+  StoppingTimeRange: {x: 0.1, y: 0.2}
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
+  MaskPrefab: {fileID: 6641477059487202975, guid: ff7597213408e44c285e82d63f95a627, type: 3}
   CardsData:
     Cards:
     - Id: Bar1
@@ -49,3 +51,4 @@ MonoBehaviour:
       Sprite: {fileID: 21300000, guid: db635939644ff442a9b50dadd664c7ca, type: 3}
     - Id: Watermelon
       Sprite: {fileID: 21300000, guid: dcd64d116eb374a609cdbb88bdcc1be7, type: 3}
+  Epsilon: 0.1

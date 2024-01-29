@@ -1,43 +1,46 @@
+using System;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace FunnySlots
 {
     public class HudPlayButtonReactSystem : IEcsInitSystem
     {
-        [EcsUguiNamed("PlayButton")] Button PlayButton;
+        [EcsUguiNamed("PlayButton")] Button _playButton;
 
-        private EcsFilterInject<Inc<CardMoving>> _filter;
-        private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
+
+        private Type lastUsedEventType = typeof(StopCardsMoveEvent);
 
         public void Init(IEcsSystems systems)
         {
-            PlayButton.onClick.AddListener(RollSlots);
+            _playButton.onClick.AddListener(OnClickButton);
         }
 
-        private void RollSlots()
+        private void OnClickButton()
         {
-            foreach (int entity in _filter.Value)
-            {
-                ref CardMoving cardMoving = ref entity.Get<CardMoving>(_world);
-                cardMoving.IsMoving = !cardMoving.IsMoving;
-            }
-
-            CreateFinishRollingConditions();
+            if (lastUsedEventType == typeof(StopCardsMoveEvent))
+               CreateStartMovingEvent();
+            else
+                CreateStopMovingEvent();
         }
 
-        private void CreateFinishRollingConditions()
+        private void CreateStartMovingEvent()
         {
-            float rollingTime = Random.Range(
-                _configuration.Value.RollingTimeRange.x,
-                _configuration.Value.RollingTimeRange.y);
-
             int movingWatcherEntity = _world.NewEntity();
-            movingWatcherEntity.Get<WaitForStopMoving>(_world).RollingTime = rollingTime;
+            movingWatcherEntity.Set<StartCardsMoveEvent>(_world);
+            
+            lastUsedEventType = typeof(StartCardsMoveEvent);
+        }
+        
+        private void CreateStopMovingEvent()
+        {
+            int movingWatcherEntity = _world.NewEntity();
+            movingWatcherEntity.Set<StopCardsMoveEvent>(_world);
+            
+            lastUsedEventType = typeof(StopCardsMoveEvent);
         }
     }
 }
