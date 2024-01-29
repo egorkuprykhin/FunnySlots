@@ -1,6 +1,5 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace FunnySlots
 {
@@ -14,8 +13,7 @@ namespace FunnySlots
 
         public void Run(IEcsSystems systems)
         {
-            if (_highestCards.Value.GetEntitiesCount() == 0)
-                InitHighestCards();
+            TryInitHighestCards();
 
             foreach (var highestCardInRow in _highestCards.Value)
             {
@@ -30,10 +28,12 @@ namespace FunnySlots
             }
         }
 
-        private void InitHighestCards()
+        private void TryInitHighestCards()
         {
+            if (_highestCards.Value.GetEntitiesCount() > 0)
+                return;
+            
             int rowsCount = _configuration.Value.FieldSize.x;
-            Debug.Log($"Init highest cards rows count: {rowsCount}");
 
             for (int row = 0; row < rowsCount; row ++)
             {
@@ -43,7 +43,7 @@ namespace FunnySlots
                     highestCardInRowByPosition.Get<CardData>(_world).Row;
             }
         }
-        
+
         private int GetCardWithMaxYPositionInRow(int row)
         {
             float cardMaxPosY = float.MinValue;
@@ -63,9 +63,6 @@ namespace FunnySlots
 
             return entity;
         }
-
-        private bool ApproximatelyEqual(float cardPosY, float cardMaxPosY) => 
-            Mathf.Abs(cardPosY - cardMaxPosY) < _configuration.Value.Epsilon;
     }
     
 }
