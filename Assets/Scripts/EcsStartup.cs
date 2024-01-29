@@ -25,13 +25,16 @@ namespace FunnySlots {
                 .Add (new InitCameraSystem ())
                 .Add (new InitFieldMaskSystem ())
                 
+                .Add (new ScoresSystem ())
+                
                 .Add (new WatchHighestCardSystem ())
                 .Add (new CardLifecycleSystem ())
                 
-                
                 .Add (new CreateNewCardsSystem ())
                 
-                .Add (new HudPlayButtonReactSystem ())
+                .Add (new HudPlayButtonSystem ())
+                .Add (new HudBackButtonSystem ())
+                
                 .Add (new CardsMovingSystem ())
                 
                 .Add (new MoveCardSystem ())

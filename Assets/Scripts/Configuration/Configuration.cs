@@ -23,6 +23,7 @@ namespace FunnySlots
 
         [Header("Prefabs")]
         public CardView CardView;
+        public ScoreView ScoreView;
         public GameObject MaskPrefab;
 
         [Header("Cards")]

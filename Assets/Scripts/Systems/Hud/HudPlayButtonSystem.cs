@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace FunnySlots
 {
-    public class HudPlayButtonReactSystem : IEcsInitSystem
+    public class HudPlayButtonSystem : IEcsInitSystem
     {
         [EcsUguiNamed("PlayButton")] Button _playButton;
 
