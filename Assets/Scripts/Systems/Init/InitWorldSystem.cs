@@ -19,7 +19,7 @@ namespace FunnySlots
             for (int x = 0; x < fieldSize.x + extraCells.x; x++)
             for (int y = 0; y < fieldSize.y + extraCells.y; y++)
             {
-                CardEntry cardData = _spriteSelector.Value.GetRandomCardEntryData();
+                CardInitializeData cardInitializeData = _spriteSelector.Value.GetRandomCardEntryData();
                 Vector2 position = new Vector2(
                     cellSize.x * (x + 0.5f - 0.5f * fieldSize.x),
                     cellSize.y * (y + 0.5f - 0.5f * fieldSize.y));
@@ -28,7 +28,7 @@ namespace FunnySlots
                 ref var cardCreationData = ref newCardEntity.Get<CardData>(_world);
 
                 cardCreationData.Position = position;
-                cardCreationData.CardEntry = cardData;
+                cardCreationData.InitializeData = cardInitializeData;
                 cardCreationData.Row = x;
 
                 newCardEntity.Set<CreateCardEvent>(_world);

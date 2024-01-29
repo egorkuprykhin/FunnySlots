@@ -4,12 +4,12 @@ namespace FunnySlots
     {
         private readonly CardsData _cardsData;
         
-        public CardsSpriteSelectorService(Configuration configuration)
+        public CardsSpriteSelectorService(CardsData cardsData)
         {
-            _cardsData = configuration.CardsData;
+            _cardsData = cardsData;
         }
 
-        public CardEntry GetRandomCardEntryData()
+        public CardInitializeData GetRandomCardEntryData()
         {
             var randomIndex = UnityEngine.Random.Range(0, _cardsData.Cards.Count);
             return _cardsData.Cards[randomIndex];

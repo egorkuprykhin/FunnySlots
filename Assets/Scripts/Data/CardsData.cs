@@ -6,6 +6,6 @@ namespace FunnySlots
     [Serializable]
     public class CardsData
     {
-        public List<CardEntry> Cards = new();
+        public List<CardInitializeData> Cards = new();
     }
 }

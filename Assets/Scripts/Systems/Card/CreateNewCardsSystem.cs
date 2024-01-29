@@ -28,13 +28,13 @@ namespace FunnySlots
 
         private void CreateNewCardAboveHighest(ref CardData highestCardData)
         {
-            CardEntry cardEntry = _spriteSelector.Value.GetRandomCardEntryData();
+            CardInitializeData cardInitializeData = _spriteSelector.Value.GetRandomCardEntryData();
             Vector2 position = highestCardData.Position + new Vector2(0, _configuration.Value.CellSize.y);
 
             int createdCardEntity = _world.NewEntity();
             ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
 
-            cardCreationData.CardEntry = cardEntry;
+            cardCreationData.InitializeData = cardInitializeData;
             cardCreationData.Position = position;
             
             cardCreationData.Row = highestCardData.Row;

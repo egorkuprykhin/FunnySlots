@@ -4,10 +4,10 @@ namespace FunnySlots
 {
     public struct CardData : IComponent
     {
+        public CardInitializeData InitializeData;
+        
         public Vector2 Position;
-        public CardEntry CardEntry;
         public int Row;
-        public float Speed;
         public bool IsMoving;
     }
 }

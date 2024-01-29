@@ -6,14 +6,14 @@ namespace FunnySlots
 {
     public class MoveCardSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<CardData>> _filter;
+        private readonly EcsFilterInject<Inc<CardData>> _cards;
         
         private readonly EcsCustomInject<Configuration> _configuration;
         private readonly EcsWorldInject _world;
 
         public void Run(IEcsSystems systems)
         {
-            foreach (int entity in _filter.Value)
+            foreach (int entity in _cards.Value)
             {
                 if (entity.Get<CardData>(_world.Value).IsMoving)
                     Move(entity);

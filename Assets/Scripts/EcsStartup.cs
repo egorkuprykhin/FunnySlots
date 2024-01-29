@@ -16,7 +16,7 @@ namespace FunnySlots {
 
         void Start ()
         {
-            _cardSpriteSelectionService = new CardsSpriteSelectorService(Configuration);
+            _cardSpriteSelectionService = new CardsSpriteSelectorService(Configuration.CardsData);
             
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
@@ -40,8 +40,8 @@ namespace FunnySlots {
                 .Add (new MoveCardSystem ())
                 .Add (new UpdatePositionSystem ())
                 
-                .Add (new StopCardsMoveWatcherSystem ())
-                .Add (new StopCardsMovingAtTargetPositionSystem ())
+                // .Add (new StopCardsMoveWatcherSystem ())
+                // .Add (new StopCardsMovingAtTargetPositionSystem ())
                 
                 .Add (new DestroyOldCardsSystem ())
                 
