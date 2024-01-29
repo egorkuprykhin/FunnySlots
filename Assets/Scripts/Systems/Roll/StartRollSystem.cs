@@ -54,8 +54,6 @@ namespace FunnySlots
             rowEntity.Get<StopRowInTime>(_world).Row = row;
             rowEntity.Get<StopRowInTime>(_world).StopTime = stopTime;
             rowEntity.Get<StopRowInTime>(_world).Timer = 0;
-            
-            Debug.Log($"CreateStopRowInTimeEntity");
         }
 
         private float CalculateStopTimingForRow(int row, float rollingTime, float stoppingTime)

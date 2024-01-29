@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public class MoveCardSystem : IEcsRunSystem
+    public class CardsMovingSystem : IEcsRunSystem
     {
         private readonly EcsFilterInject<Inc<CardData>> _cards;
         

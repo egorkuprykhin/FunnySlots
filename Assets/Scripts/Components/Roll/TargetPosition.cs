@@ -1,7 +1,9 @@
+using UnityEngine;
+
 namespace FunnySlots
 {
     public struct TargetPosition : IComponent
     {
-        public float Value;
+        public Vector2 Value;
     }
 }

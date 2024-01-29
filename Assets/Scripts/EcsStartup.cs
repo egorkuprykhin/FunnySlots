@@ -23,12 +23,11 @@ namespace FunnySlots {
             _systems
                 .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
-                // .Add (new InitFieldMaskSystem ())
-                
-                .Add (new ScoresSystem ())
+                .Add (new InitFieldMaskSystem ())
                 
                 .Add (new CardLifecycleSystem ())
                 .Add (new CreateNewCardsSystem ())
+                .Add (new CardsMovingSystem ())
                 
                 .Add (new WatchHighestCardSystem ())
                 
@@ -37,9 +36,10 @@ namespace FunnySlots {
                 
                 .Add (new StartRollSystem ())
                 .Add (new StopRowInTimeSystem ())
+                .Add (new StopCardInTargetPosition ())
                 
-                .Add (new MoveCardSystem ())
                 .Add (new UpdateViewPositionSystem ())
+                .Add (new ScoresSystem ())
                 
                 .Add (new DestroyOldCardsSystem ())
                 
