@@ -7,11 +7,13 @@ namespace FunnySlots
     {
         public Vector2Int FieldSize;
         public Vector2 CellSize;
+
+        public Vector2 ExtraCells;
         
         public float CameraPadding;
 
         public int MaxOffsetToCreateCard;
-        public int MinOffsetToDestroyCard;
+        public int CellsOffsetToDestroyCard;
 
         public Vector2 CardMoveSpeed;
 
@@ -21,8 +23,11 @@ namespace FunnySlots
 
         [Header("Prefabs")]
         public CardView CardView;
+        public GameObject MaskPrefab;
 
         [Header("Cards")]
         public CardsData CardsData;
+
+        public float Epsilon;
     }
 }

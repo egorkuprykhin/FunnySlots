@@ -1,6 +1,6 @@
 namespace FunnySlots
 {
-    public struct PassedTime : IComponent
+    public struct StopMovingTimer : IComponent
     {
         public float Value;
     }

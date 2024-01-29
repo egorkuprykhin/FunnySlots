@@ -21,24 +21,26 @@ namespace FunnySlots {
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world);
             _systems
-                .Add (new InitializeWorldSystem ())
+                .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
+                .Add (new InitFieldMaskSystem ())
                 
-                .Add (new SetCardsSpriteSystem ())
                 .Add (new WatchHighestCardSystem ())
+                .Add (new CardLifecycleSystem ())
                 
-                .Add (new CardsToCreateWatcherSystem ())
-                .Add (new CardsCreateSystem ())
+                
+                .Add (new CreateNewCardsSystem ())
                 
                 .Add (new HudPlayButtonReactSystem ())
+                .Add (new CardsMovingSystem ())
+                
                 .Add (new MoveCardSystem ())
                 .Add (new UpdatePositionSystem ())
                 
-                .Add (new StopRollingWatcherSystem ())
-                .Add (new StopMovingSystem ())
+                .Add (new StopCardsMoveWatcherSystem ())
+                .Add (new StopCardsMovingAtTargetPositionSystem ())
                 
-                .Add (new CardsToDestroyWatcherSystem ())
-                .Add (new CardsDestroySystem ())
+                .Add (new DestroyOldCardsSystem ())
                 
                 
                 // register additional worlds here, for example:
