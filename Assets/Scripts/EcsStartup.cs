@@ -23,25 +23,23 @@ namespace FunnySlots {
             _systems
                 .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
-                .Add (new InitFieldMaskSystem ())
+                // .Add (new InitFieldMaskSystem ())
                 
                 .Add (new ScoresSystem ())
                 
-                .Add (new WatchHighestCardSystem ())
                 .Add (new CardLifecycleSystem ())
-                
                 .Add (new CreateNewCardsSystem ())
+                
+                .Add (new WatchHighestCardSystem ())
                 
                 .Add (new HudPlayButtonSystem ())
                 .Add (new HudBackButtonSystem ())
                 
-                .Add (new CardsMovingSystem ())
+                .Add (new StartRollSystem ())
+                .Add (new StopRowInTimeSystem ())
                 
                 .Add (new MoveCardSystem ())
-                .Add (new UpdatePositionSystem ())
-                
-                // .Add (new StopCardsMoveWatcherSystem ())
-                // .Add (new StopCardsMovingAtTargetPositionSystem ())
+                .Add (new UpdateViewPositionSystem ())
                 
                 .Add (new DestroyOldCardsSystem ())
                 

@@ -6,7 +6,7 @@ namespace FunnySlots
 {
     public class DestroyOldCardsSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<CardData, CardViewRef>, Exc<HighestCardMarker, DestroyCardEvent>> _cards;
+        private EcsFilterInject<Inc<CardData, CardViewRef>, Exc<HighestCardInRow, DestroyCardEvent>> _cards;
         
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;

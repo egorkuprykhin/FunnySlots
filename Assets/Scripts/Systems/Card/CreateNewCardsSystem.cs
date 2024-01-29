@@ -6,7 +6,7 @@ namespace FunnySlots
 {
     public class CreateNewCardsSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<HighestCardMarker, CardData, CardViewRef>> _highestCards;
+        private EcsFilterInject<Inc<HighestCardInRow, CardData, CardViewRef>> _highestCards;
 
         private EcsCustomInject<CardsSpriteSelectorService> _spriteSelector;
         private EcsCustomInject<Configuration> _configuration;
@@ -24,6 +24,8 @@ namespace FunnySlots
                 if (highestCardData.Position.y < offsetYToCreateCard) 
                     CreateNewCardAboveHighest(ref highestCardData);
             }
+            
+            Debug.Log($"Highest cards {_highestCards.Value.GetEntitiesCount()}");
         }
 
         private void CreateNewCardAboveHighest(ref CardData highestCardData)

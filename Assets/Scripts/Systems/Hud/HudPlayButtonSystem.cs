@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
@@ -12,35 +11,15 @@ namespace FunnySlots
 
         private EcsWorldInject _world;
 
-        private Type lastUsedEventType = typeof(StopCardsMoveEvent);
-
         public void Init(IEcsSystems systems)
         {
-            _playButton.onClick.AddListener(OnClickButton);
+            _playButton.onClick.AddListener(CreateStartRollEvent);
         }
 
-        private void OnClickButton()
+        private void CreateStartRollEvent()
         {
-            if (lastUsedEventType == typeof(StopCardsMoveEvent))
-               CreateStartMovingEvent();
-            else
-                CreateStopMovingEvent();
-        }
-
-        private void CreateStartMovingEvent()
-        {
-            int movingWatcherEntity = _world.NewEntity();
-            movingWatcherEntity.Set<StartCardsMoveEvent>(_world);
-            
-            lastUsedEventType = typeof(StartCardsMoveEvent);
-        }
-        
-        private void CreateStopMovingEvent()
-        {
-            int movingWatcherEntity = _world.NewEntity();
-            movingWatcherEntity.Set<StopCardsMoveEvent>(_world);
-            
-            lastUsedEventType = typeof(StopCardsMoveEvent);
+            int newEntity = _world.NewEntity();
+            newEntity.Set<StartRollEvent>(_world);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace FunnySlots
     public class CardLifecycleSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<CreateCardEvent, CardData>, Exc<CardViewRef>> _cardsToCreate;
-        private EcsFilterInject<Inc<DestroyCardEvent, CardViewRef>, Exc<HighestCardMarker>> _cardsToDestroy;
+        private EcsFilterInject<Inc<DestroyCardEvent, CardViewRef>, Exc<HighestCardInRow>> _cardsToDestroy;
         
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
