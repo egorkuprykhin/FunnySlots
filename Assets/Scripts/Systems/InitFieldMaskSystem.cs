@@ -15,7 +15,7 @@ namespace FunnySlots
 
             GameObject createdMask = Object.Instantiate(maskPrefab);
 
-            var position = new Vector3(0, _configuration.Value.FieldSize.x * 0.5f);
+            var position = new Vector3(0, _configuration.Value.FieldSize.y * 0.5f);
             
             var scale = new Vector3(
                 _configuration.Value.FieldSize.x + 1, 

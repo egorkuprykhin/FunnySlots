@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb1a51dd0f4439fa6d52e4f7187ddbc, type: 3}
   m_Name: Configuration
   m_EditorClassIdentifier: 
-  FieldSize: {x: 3, y: 2}
+  FieldSize: {x: 5, y: 3}
   CellSize: {x: 4, y: 4}
   ExtraCells: {x: 0, y: 3}
   CameraPadding: 7
   MaxOffsetToCreateCard: 3
   CellsOffsetToDestroyCard: 3
-  CardMoveSpeed: {x: 0, y: -2}
+  CardMoveSpeed: {x: 0, y: -10}
   RollingTimeRange: {x: 1, y: 1.2}
   StoppingTimeRange: {x: 0.1, y: 0.2}
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
