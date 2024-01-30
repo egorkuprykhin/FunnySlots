@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using FunnySlots.Sound;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace FunnySlots
         private EcsFilterInject<Inc<CardData, CardViewRef>> _cards;
 
         private EcsCustomInject<Configuration> _configuration;
+        private EcsCustomInject<SceneData> _sceneData;
 
         private EcsWorldInject _world;
 
@@ -26,9 +28,17 @@ namespace FunnySlots
                 ClearLastCards();
                 CreateStopRowTimingsAndEntities();
                 StartRollCards();
+                PlayRollSound();
                 
                 startRollEvent.Del<StartRollEvent>(_world);
             }
+        }
+
+        private void PlayRollSound()
+        {
+            ref var playSoundEvent = ref _world.NewEntity().Get<PlaySoundEvent>(_world);
+            playSoundEvent.Type = CoreSound.RollStarted;
+            playSoundEvent.NeedPlay = true;
         }
 
         private void ClearLastCards()
@@ -58,9 +68,19 @@ namespace FunnySlots
             
             await UniTask.Delay(delayMs);
             await WaitUntilAllCardsStopped();
-            
+
             if (_world.Value.IsAlive())
+            {
+                StopRollSound();
                 _world.NewEntity().Set<CheckWinEvent>(_world);
+            }
+        }
+
+        private void StopRollSound()
+        {
+            ref var playSoundEvent = ref _world.NewEntity().Get<PlaySoundEvent>(_world);
+            playSoundEvent.Type = CoreSound.RollStopped;
+            playSoundEvent.NeedPlay = false;
         }
 
         private async UniTask WaitUntilAllCardsStopped()

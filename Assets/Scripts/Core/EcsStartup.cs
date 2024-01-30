@@ -41,6 +41,7 @@ namespace FunnySlots {
                 .Add (new InitCameraSystem ())
                 .Add (new InitFieldMaskSystem ())
                 .Add (new SharedDataUpdater ())
+                .Add (new SoundSystem ())
                 
                 .Add (new CardLifecycleSystem ())
                 .Add (new CreateNewCardsSystem ())

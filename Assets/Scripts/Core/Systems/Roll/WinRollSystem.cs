@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FunnySlots.Sound;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace FunnySlots
         
         public void Run(IEcsSystems systems)
         {
+            bool playWinSound = false;
             foreach (var cardInsideField in _cardsInsideField.Value)
             {
                 ref var cardData = ref cardInsideField.Get<CardData>(_world);
@@ -24,13 +26,26 @@ namespace FunnySlots
                 var verticalCards = _positionService.Value.GetAllHorizontalCardsByCard(cardInsideField);
                 var id = cardInsideField.Get<CardData>(_world).InitialData.Id;
 
-                CheckCombinations(horizontalCards, cardData, id);
-                CheckCombinations(verticalCards, cardData, id);
+                if (CheckCombinations(horizontalCards, cardData, id) > 0)
+                    playWinSound = true;
+                if (CheckCombinations(verticalCards, cardData, id) > 0)
+                    playWinSound = true;
             }
+            
+            if(playWinSound)
+                PlayWinSound();
+        }
+        
+        private void PlayWinSound()
+        {
+            ref var playSoundEvent = ref _world.NewEntity().Get<PlaySoundEvent>(_world);
+            playSoundEvent.Type = CoreSound.Win;
+            playSoundEvent.NeedPlay = true;
         }
 
-        private void CheckCombinations(List<int> cardsCombination, CardData cardData, string id)
+        private int CheckCombinations(List<int> cardsCombination, CardData cardData, string id)
         {
+            int combinations = 0;
             foreach (var combinationCard in cardsCombination)
             {
                 ref var combinationCardData = ref combinationCard.Get<CardData>(_world);
@@ -43,6 +58,8 @@ namespace FunnySlots
                     &&
                     !combinationCard.Has<WinFrameViewRef>(_world))
                 {
+                    combinations++;
+                    
                     CardWinFrameView prefab = _configuration.Value.CardWinFrameView;
                     var position = combinationCardData.Position;
                     
@@ -52,6 +69,8 @@ namespace FunnySlots
                     _world.NewEntity().Get<AddScoresEvent>(_world).Value = _configuration.Value.CombinationScore;
                 }
             }
+
+            return combinations;
         }
     }
 }

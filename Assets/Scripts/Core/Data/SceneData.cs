@@ -6,5 +6,6 @@ namespace FunnySlots
     {
         public Camera MainCamera;
         public Transform ScoreViewParent;
+        public AudioSource AudioSource;
     }
 }

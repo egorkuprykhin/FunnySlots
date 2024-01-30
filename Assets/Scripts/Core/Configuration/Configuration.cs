@@ -20,6 +20,10 @@ namespace FunnySlots
         public Vector2 StoppingTimeRange;
 
         public int TimeBeforeWinEventMs;
+        
+        public int MinCombinationX;
+        public int MinCombinationY;
+        public int CombinationScore;
 
         [Header("Prefabs")]
         public CardView CardView;
@@ -29,9 +33,8 @@ namespace FunnySlots
 
         [Header("Cards")]
         public CardsData CardsData;
-
-        public int MinCombinationX;
-        public int MinCombinationY;
-        public int CombinationScore;
+        
+        [Header("Sounds")]
+        public SoundData Sounds;
     }
 }

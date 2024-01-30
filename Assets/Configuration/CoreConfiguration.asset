@@ -21,6 +21,9 @@ MonoBehaviour:
   RollingTimeRange: {x: 1.2, y: 1.6}
   StoppingTimeRange: {x: 0.4, y: 0.4}
   TimeBeforeWinEventMs: 50
+  MinCombinationX: 3
+  MinCombinationY: 3
+  CombinationScore: 10
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
   CardWinFrameView: {fileID: 6347676260594506665, guid: d31fd566a075f47599ba388bfb79eeae, type: 3}
   ScoreView: {fileID: 6710646643644736514, guid: 28cd08b2d3c19468198990df7a902c0f, type: 3}
@@ -53,6 +56,14 @@ MonoBehaviour:
       Sprite: {fileID: 21300000, guid: db635939644ff442a9b50dadd664c7ca, type: 3}
     - Id: Watermelon
       Sprite: {fileID: 21300000, guid: dcd64d116eb374a609cdbb88bdcc1be7, type: 3}
-  MinCombinationX: 3
-  MinCombinationY: 3
-  CombinationScore: 10
+  Sounds:
+    Sounds:
+    - Event: 0
+      Clips:
+      - {fileID: 8300000, guid: 98bf64921210244848d3d7dc671b1298, type: 3}
+      - {fileID: 8300000, guid: dccb321dc23594d77bc3eac3841efb57, type: 3}
+      - {fileID: 8300000, guid: d02be5c3f20c1473c971d620155658f7, type: 3}
+    - Event: 2
+      Clips:
+      - {fileID: 8300000, guid: 3729bd9ca0a384e90b18085c6f477e18, type: 3}
+      - {fileID: 0}
