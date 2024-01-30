@@ -1,7 +1,8 @@
+using FSM;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
-using UnityEngine;
+using States;
 using UnityEngine.UI;
 
 namespace FunnySlots
@@ -9,6 +10,8 @@ namespace FunnySlots
     public class HudBackButtonSystem : IEcsInitSystem
     {
         [EcsUguiNamed("BackButton")] Button _backButton;
+
+        private EcsCustomInject<StateMachine> _stateMachine;
 
         private EcsWorldInject _world;
 
@@ -24,7 +27,7 @@ namespace FunnySlots
 
         private void BackToMenu()
         {
-            Debug.Log("Button Back To Menu pressed!");
+            _stateMachine.Value.Enter<MenuState>();
         }
     }
 }

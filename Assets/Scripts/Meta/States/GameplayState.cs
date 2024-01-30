@@ -1,6 +1,7 @@
 using FSM;
 using Scripts.Configuration;
 using Services;
+using UnityEngine;
 using VContainer;
 
 namespace States
@@ -15,8 +16,9 @@ namespace States
             await _sceneLoader.LoadScene(_globalConfiguration.GameSceneName);
         }
 
-        public void Exit()
+        public async void Exit()
         {
+            await _sceneLoader.UnloadScene(_globalConfiguration.GameSceneName);
         }
     }
 }

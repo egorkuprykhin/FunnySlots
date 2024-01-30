@@ -1,12 +1,17 @@
+using FSM;
 using FunnySlots.Systems;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
 using UnityEngine;
+using VContainer;
 
 namespace FunnySlots {
-    sealed class EcsStartup : MonoBehaviour {
-        EcsWorld _world;        
+    public sealed class EcsStartup : MonoBehaviour
+    {
+        private StateMachine _stateMachine;
+        
+        EcsWorld _world;
         IEcsSystems _systems;
 
         public Configuration Configuration;
@@ -15,6 +20,12 @@ namespace FunnySlots {
 
         private CardsSpriteSelectorService _cardSpriteSelectionService;
         private FieldPositionsService _fieldPositionService;
+
+        [Inject]
+        public void Construct(StateMachine stateMachine)
+        {
+            _stateMachine = stateMachine;
+        }
 
         void Start ()
         {
@@ -65,6 +76,7 @@ namespace FunnySlots {
                 
                 .Inject(_cardSpriteSelectionService)
                 .Inject(_fieldPositionService)
+                .Inject(_stateMachine)
                 
                 .InjectUgui(UguiEmitter)
                 

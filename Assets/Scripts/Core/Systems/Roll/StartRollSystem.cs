@@ -59,19 +59,19 @@ namespace FunnySlots
             await UniTask.Delay(delayMs);
             await WaitUntilAllCardsStopped();
             
-            _world.NewEntity().Set<CheckWinEvent>(_world);
+            if (_world.Value.IsAlive())
+                _world.NewEntity().Set<CheckWinEvent>(_world);
         }
 
         private async UniTask WaitUntilAllCardsStopped()
         {
             await UniTask.WaitUntil(() =>
             {
-                foreach (int card in _cards.Value)
-                    if (card.Get<CardData>(_world).IsMoving)
-                    {
-                        return false;
-                    }
-                
+                if (_world.Value.IsAlive())
+                    foreach (int card in _cards.Value)
+                        if (card.Get<CardData>(_world).IsMoving)
+                            return false;
+
                 return true;
             });
         }

@@ -12,6 +12,11 @@ namespace States
 
         private void Awake()
         {
+            TryInit();
+        }
+
+        private void TryInit()
+        {
             Text = GetComponent<TMP_Text>();
             Image = GetComponent<Image>();
             Sprite = GetComponent<SpriteRenderer>();
@@ -19,6 +24,8 @@ namespace States
 
         public void SetColor(Color color)
         {
+            TryInit();
+            
             if (Text != null)
                 Text.color = color;
             if (Image != null)

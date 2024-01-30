@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba67c8e78ac44b0ba0fe5ef99e9fbb7f, type: 3}
   m_Name: GlobalConfiguration
   m_EditorClassIdentifier: 
-  GameSceneName: Default
-  MenuColor: {r: 0.82778573, g: 0.8509804, b: 0.78039217, a: 1}
+  GameSceneName: FunnySlots
+  MenuColor: {r: 0.91634035, g: 0.9339623, b: 0.885502, a: 1}

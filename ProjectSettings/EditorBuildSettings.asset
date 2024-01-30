@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Meta.unity
+    guid: c968b688eb598454cac7e1cdbfcc036e
+  - enabled: 1
     path: Assets/Scenes/FunnySlots.unity
     guid: 185c61933deb749a6be21cb07a1a21b4
   m_configObjects: {}

@@ -56,14 +56,22 @@ namespace States
 
         private void SubscribeMenuButtons()
         {
+            _menuView.PlayButton.onClick.RemoveAllListeners();
             _menuView.PlayButton.onClick.AddListener(PlayGameButtonPressed);
+            
+            _menuView.SettingsButton.onClick.RemoveAllListeners();
             _menuView.SettingsButton.onClick.AddListener(SettingsButtonPressed);
+            
+            _menuView.ShowPolicyButton.onClick.RemoveAllListeners();
             _menuView.ShowPolicyButton.onClick.AddListener(ShowPolicyButtonPressed);
+            
+            _menuView.ExitButton.onClick.RemoveAllListeners();
             _menuView.ExitButton.onClick.AddListener(ExitButtonPressed);
         }
 
         private void SubscribePolicyButton()
         {
+            _policyScreenView.BackToMenuButton.onClick.RemoveAllListeners();
             _policyScreenView.BackToMenuButton.onClick.AddListener(PolicyBackToMenu);
         }
     }

@@ -10,6 +10,7 @@ namespace Services
         public async UniTask LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Additive)
         {
             await SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         }
         
         public async UniTask UnloadScene(string sceneName)
