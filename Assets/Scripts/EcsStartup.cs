@@ -1,3 +1,4 @@
+using FunnySlots.Systems;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
@@ -13,17 +14,22 @@ namespace FunnySlots {
         public EcsUguiEmitter UguiEmitter;
 
         private CardsSpriteSelectorService _cardSpriteSelectionService;
+        private FieldPositionsService _fieldPositionService;
 
         void Start ()
         {
+            SharedData sharedData = new SharedData();
+            
             _cardSpriteSelectionService = new CardsSpriteSelectorService(Configuration.CardsData);
+            _fieldPositionService = new FieldPositionsService(Configuration, sharedData);
             
             _world = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _systems = new EcsSystems (_world, sharedData);
             _systems
                 .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
                 .Add (new InitFieldMaskSystem ())
+                .Add (new SharedDataUpdater ())
                 
                 .Add (new CardLifecycleSystem ())
                 .Add (new CreateNewCardsSystem ())
@@ -33,15 +39,18 @@ namespace FunnySlots {
                 
                 .Add (new HudPlayButtonSystem ())
                 .Add (new HudBackButtonSystem ())
-                
                 .Add (new StartRollSystem ())
                 .Add (new StopRowInTimeSystem ())
                 .Add (new StopCardInTargetPosition ())
+                
+                .Add( new CheckWinSystem ())
+                .Add( new WinRollSystem ())
                 
                 .Add (new UpdateViewPositionSystem ())
                 .Add (new ScoresSystem ())
                 
                 .Add (new DestroyOldCardsSystem ())
+                
                 
                 
                 // register additional worlds here, for example:
@@ -53,7 +62,10 @@ namespace FunnySlots {
 #endif
                 
                 .Inject(Configuration, SceneData)
+                
                 .Inject(_cardSpriteSelectionService)
+                .Inject(_fieldPositionService)
+                
                 .InjectUgui(UguiEmitter)
                 
                 .Init ();

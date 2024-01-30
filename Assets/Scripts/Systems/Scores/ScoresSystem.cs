@@ -27,9 +27,19 @@ namespace FunnySlots
             
             foreach (int addScoreEntity in _addScoresEvents.Value)
             {
-                var scoresToAdd = addScoreEntity.Get<AddScoresEvent>(_world).Value;
+                ref var scoresToAdd = ref addScoreEntity.Get<AddScoresEvent>(_world).Value;
                 scoresEntity.Value += scoresToAdd;
+
+                UpdateScoresView();
+                
+                addScoreEntity.Del<AddScoresEvent>(_world);
             }
+        }
+
+        private void UpdateScoresView()
+        {
+            Scores scores = _world.Value.GetPool<Scores>().Get(_scoresEntity);
+            _scoresEntity.Get<ScoreViewRef>(_world).Value.ScoreValue.text = scores.Value.ToString();
         }
 
         private int InitScoresEntity()

@@ -30,7 +30,7 @@ namespace FunnySlots
 
             CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
 
-            instance.Renderer.sprite = createCardData.InitializeData.Sprite;
+            instance.CardRenderer.sprite = createCardData.InitialData.Sprite;
 
             entity.Get<CardViewRef>(_world).CardView = instance;
             

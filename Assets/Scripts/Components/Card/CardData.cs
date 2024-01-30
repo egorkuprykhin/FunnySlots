@@ -4,7 +4,7 @@ namespace FunnySlots
 {
     public struct CardData : IComponent
     {
-        public CardInitializeData InitializeData;
+        public CardInitializeData InitialData;
         
         public Vector2 Position;
         public int Row;

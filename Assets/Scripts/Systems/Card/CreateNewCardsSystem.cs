@@ -24,8 +24,6 @@ namespace FunnySlots
                 if (highestCardData.Position.y < offsetYToCreateCard) 
                     CreateNewCardAboveHighest(ref highestCardData);
             }
-            
-            Debug.Log($"Highest cards {_highestCards.Value.GetEntitiesCount()}");
         }
 
         private void CreateNewCardAboveHighest(ref CardData highestCardData)
@@ -36,7 +34,7 @@ namespace FunnySlots
             int createdCardEntity = _world.NewEntity();
             ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
 
-            cardCreationData.InitializeData = cardInitializeData;
+            cardCreationData.InitialData = cardInitializeData;
             cardCreationData.Position = position;
             
             cardCreationData.Row = highestCardData.Row;

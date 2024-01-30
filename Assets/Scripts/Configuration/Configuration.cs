@@ -19,15 +19,19 @@ namespace FunnySlots
         public Vector2 RollingTimeRange;
         public Vector2 StoppingTimeRange;
 
+        public int TimeBeforeWinEventMs;
 
         [Header("Prefabs")]
         public CardView CardView;
+        public CardWinFrameView CardWinFrameView;
         public ScoreView ScoreView;
-        public GameObject MaskPrefab;
+        public MaskView MaskView;
 
         [Header("Cards")]
         public CardsData CardsData;
 
-        public float Epsilon;
+        public int MinCombinationX;
+        public int MinCombinationY;
+        public int CombinationScore;
     }
 }

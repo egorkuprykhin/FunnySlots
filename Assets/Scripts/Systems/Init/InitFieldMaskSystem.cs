@@ -1,3 +1,4 @@
+using FunnySlots.Init;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
@@ -11,20 +12,18 @@ namespace FunnySlots
         
         public void Init(IEcsSystems systems)
         {
-            GameObject maskPrefab = _configuration.Value.MaskPrefab;
-
-            GameObject createdMask = Object.Instantiate(maskPrefab);
-
-            var position = new Vector3(0, _configuration.Value.FieldSize.y * 0.5f);
+            int maskEntity = _world.NewEntity();
             
+            MaskView instance = Object.Instantiate(_configuration.Value.MaskView);
+
+            maskEntity.Get<MaskViewRef>(_world).Value = instance;
+
             var scale = new Vector3(
                 _configuration.Value.FieldSize.x + 1, 
-                _configuration.Value.FieldSize.y + 1, 
+                _configuration.Value.FieldSize.y, 
                 1);
 
-
-            createdMask.transform.localPosition = position;
-            createdMask.transform.localScale = scale;
+            instance.transform.localScale = scale;
         }
     }
 }

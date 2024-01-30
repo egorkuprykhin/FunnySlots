@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FunnySlots
 {
@@ -8,6 +10,8 @@ namespace FunnySlots
     {
         private EcsFilterInject<Inc<StartRollEvent>> _startRollEvent;
         private EcsFilterInject<Inc<HighestCardInRow>> _highestCards;
+        
+        private EcsFilterInject<Inc<CardInsideField>> _cardsToClean;
         
         private EcsFilterInject<Inc<CardData, CardViewRef>> _cards;
 
@@ -19,15 +23,26 @@ namespace FunnySlots
         {
             foreach (int startRollEvent in _startRollEvent.Value)
             {
+                ClearLastCards();
                 CreateStopRowTimingsAndEntities();
-                
                 StartRollCards();
                 
                 startRollEvent.Del<StartRollEvent>(_world);
             }
         }
 
-        private void CreateStopRowTimingsAndEntities()
+        private void ClearLastCards()
+        {
+            foreach (int cardEntity in _cardsToClean.Value)
+                if (cardEntity.Has<WinFrameViewRef>(_world))
+                {
+                    Object.Destroy(cardEntity.Get<WinFrameViewRef>(_world).Value.gameObject);
+                    cardEntity.Del<WinFrameViewRef>(_world);
+                    cardEntity.Del<CardInsideField>(_world);
+                }
+        }
+
+        private async void CreateStopRowTimingsAndEntities()
         {
             float rollingTime = CalculateRollingTime();
             float stoppingTime = CalculateStoppingTime();
@@ -35,10 +50,30 @@ namespace FunnySlots
             foreach (int highestCardEntity in _highestCards.Value)
             {
                 int row = highestCardEntity.Get<HighestCardInRow>(_world).Row;
-                float rowStoppingTime = CalculateStopTimingForRow(row, rollingTime, stoppingTime);
-
-                CreateStopRowInTimeEntity(row, rowStoppingTime);
+                CreateStopRowInTimeEntity(row, CalculateStopTimingForRow(row, rollingTime, stoppingTime));
             }
+
+            float delay = rollingTime + stoppingTime * _configuration.Value.FieldSize.x;
+            int delayMs = Mathf.CeilToInt(delay * 1000f);
+            
+            await UniTask.Delay(delayMs);
+            await WaitUntilAllCardsStopped();
+            
+            _world.NewEntity().Set<CheckWinEvent>(_world);
+        }
+
+        private async UniTask WaitUntilAllCardsStopped()
+        {
+            await UniTask.WaitUntil(() =>
+            {
+                foreach (int card in _cards.Value)
+                    if (card.Get<CardData>(_world).IsMoving)
+                    {
+                        return false;
+                    }
+                
+                return true;
+            });
         }
 
         private void StartRollCards()

@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: Configuration
   m_EditorClassIdentifier: 
   FieldSize: {x: 5, y: 3}
-  CellSize: {x: 4, y: 4}
+  CellSize: {x: 4.2, y: 4.2}
   ExtraCells: {x: 0, y: 3}
-  CameraPadding: 7
-  MaxOffsetToCreateCard: 3
+  CameraPadding: 3
   CellsOffsetToDestroyCard: 3
-  CardMoveSpeed: {x: 0, y: -10}
-  RollingTimeRange: {x: 1, y: 1.2}
-  StoppingTimeRange: {x: 0.1, y: 0.2}
+  CardMoveSpeed: {x: 0, y: -75}
+  RollingTimeRange: {x: 1.2, y: 1.6}
+  StoppingTimeRange: {x: 0.4, y: 0.4}
+  TimeBeforeWinEventMs: 50
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
+  CardWinFrameView: {fileID: 6347676260594506665, guid: d31fd566a075f47599ba388bfb79eeae, type: 3}
   ScoreView: {fileID: 6710646643644736514, guid: 28cd08b2d3c19468198990df7a902c0f, type: 3}
-  MaskPrefab: {fileID: 6641477059487202975, guid: ff7597213408e44c285e82d63f95a627, type: 3}
+  MaskView: {fileID: 6698521532553511756, guid: ff7597213408e44c285e82d63f95a627, type: 3}
   CardsData:
     Cards:
     - Id: Bar1
@@ -52,4 +53,6 @@ MonoBehaviour:
       Sprite: {fileID: 21300000, guid: db635939644ff442a9b50dadd664c7ca, type: 3}
     - Id: Watermelon
       Sprite: {fileID: 21300000, guid: dcd64d116eb374a609cdbb88bdcc1be7, type: 3}
-  Epsilon: 0.1
+  MinCombinationX: 3
+  MinCombinationY: 3
+  CombinationScore: 10
