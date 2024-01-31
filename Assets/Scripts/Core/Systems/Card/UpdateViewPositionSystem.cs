@@ -11,10 +11,12 @@ namespace FunnySlots
         
         public void Run(IEcsSystems systems)
         {
-            if (_world.Value.IsAlive())
-                foreach (int entity in _cards.Value)
-                    entity.Get<CardViewRef>(_world).CardView.transform.position =
-                        entity.Get<CardData>(_world).Position;
+            foreach (int cardEntity in _cards.Value) 
+                SetViewPosition(cardEntity);
         }
+
+        private void SetViewPosition(int entity) =>
+            entity.Get<CardViewRef>(_world).CardView.transform.position =
+                entity.Get<CardData>(_world).Position;
     }
 }

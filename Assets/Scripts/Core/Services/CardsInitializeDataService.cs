@@ -1,10 +1,10 @@
 namespace FunnySlots
 {
-    public class CardsSpriteSelectorService 
+    public class CardsInitializeDataService 
     {
         private readonly CardsData _cardsData;
         
-        public CardsSpriteSelectorService(CardsData cardsData)
+        public CardsInitializeDataService(CardsData cardsData)
         {
             _cardsData = cardsData;
         }

@@ -15,37 +15,45 @@ namespace FunnySlots
         public void Run(IEcsSystems systems)
         {
             foreach (int entity in _cardsToCreate.Value) 
-                CreateCardView(entity);
+                CreateCard(entity);
 
             foreach (int entity in _cardsToDestroy.Value) 
                 DestroyCard(entity);
         }
 
-        private void CreateCardView(int entity)
+        private void CreateCard(int cardEntity)
         {
-            ref var cardData = ref entity.Get<CardData>(_world);
+            InstantiateCardView(cardEntity, ref cardEntity.Get<CardData>(_world));
+            ClearCreateEvent(cardEntity);
+        }
 
-            var cardPrefab = _configuration.Value.CardView;
-            var position = cardData.Position;
+        private void DestroyCard(int cardEntity)
+        {
+            DestroyCardView(cardEntity);
+            ClearDestroyEvent(cardEntity);
+            DeleteCardEntity(cardEntity);
+        }
 
-            CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
-
+        private void InstantiateCardView(int cardEntity, ref CardData cardData)
+        {
+            CardView instance = InstantiateInPosition(cardData.Position);
             instance.CardRenderer.sprite = cardData.InitialData.Sprite;
-
-            entity.Get<CardViewRef>(_world).CardView = instance;
-            
-            entity.Del<CreateCardEvent>(_world);
+            cardEntity.Get<CardViewRef>(_world).CardView = instance;
         }
 
-        private void DestroyCard(int entity)
-        {
-            var cardView = entity.Get<CardViewRef>(_world).CardView;
-            
-            Object.Destroy(cardView.gameObject);
-            
-            entity.Del<DestroyCardEvent>(_world);
-            
+        private CardView InstantiateInPosition(Vector2 position) =>
+            Object.Instantiate(_configuration.Value.CardView, position, Quaternion.identity);
+
+        private void ClearCreateEvent(int cardEntity) => 
+            cardEntity.Del<CreateCardEvent>(_world);
+
+        private void ClearDestroyEvent(int cardEntity) => 
+            cardEntity.Del<DestroyCardEvent>(_world);
+
+        private void DestroyCardView(int cardEntity) => 
+            Object.Destroy(cardEntity.Get<CardViewRef>(_world).CardView.gameObject);
+
+        private void DeleteCardEntity(int entity) => 
             _world.Value.DelEntity(entity);
-        }
     }
 }

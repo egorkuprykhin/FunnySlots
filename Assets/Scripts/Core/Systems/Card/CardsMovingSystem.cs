@@ -9,34 +9,24 @@ namespace FunnySlots
         private readonly EcsFilterInject<Inc<CardData>> _cards;
         
         private readonly EcsCustomInject<Configuration> _configuration;
+        
         private readonly EcsWorldInject _world;
 
         public void Run(IEcsSystems systems)
         {
-            foreach (int entity in _cards.Value)
-            {
-                ref var cardData = ref entity.Get<CardData>(_world);
-                
-                if (cardData.IsMoving)
-                    Move(ref cardData);
-                
-                else if (entity.Has<TargetPosition>(_world))
-                {
-                    SetPosition(ref cardData, entity.Get<TargetPosition>(_world).Value);
-                    entity.Del<TargetPosition>(_world);
-                }
-            }
+            foreach (int cardEntity in _cards.Value) 
+                TryMove(cardEntity);
         }
 
-        private void Move(ref CardData cardData)
+        private void TryMove(int cardEntity)
         {
-            var position  = cardData.Position + _configuration.Value.CardMoveSpeed * Time.deltaTime;
-            SetPosition(ref cardData, position);
+            ref var cardData = ref cardEntity.Get<CardData>(_world);
+            
+            if (cardData.IsMoving)
+                Move(ref cardData);
         }
 
-        private void SetPosition(ref CardData cardData, Vector2 position)
-        {
-            cardData.Position = position;
-        }
+        private void Move(ref CardData cardData) => 
+            cardData.Position += _configuration.Value.CardMoveSpeed * Time.deltaTime;
     }
 }

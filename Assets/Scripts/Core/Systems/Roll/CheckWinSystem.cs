@@ -11,7 +11,7 @@ namespace FunnySlots
         
         private EcsFilterInject<Inc<WinFrameViewRef>> _winFrames;
 
-        private EcsCustomInject<FieldPositionsService> _fieldPosService;
+        private EcsCustomInject<CardPositionsService> _fieldPosService;
         private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;
@@ -24,7 +24,7 @@ namespace FunnySlots
                 {
                     var pos = card.Get<CardData>(_world).Position;
                     
-                    if (_fieldPosService.Value.PositionInsideField(pos))
+                    if (_fieldPosService.Value.IsPositionInsideField(pos))
                     {
                         card.Set<CardInsideField>(_world);
                     }

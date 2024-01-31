@@ -18,8 +18,8 @@ namespace FunnySlots {
         public SceneData SceneData;
         public EcsUguiEmitter UguiEmitter;
 
-        private CardsSpriteSelectorService _cardSpriteSelectionService;
-        private FieldPositionsService _fieldPositionService;
+        private CardsInitializeDataService _cardSpriteSelectionService;
+        private CardPositionsService _cardPositionService;
 
         [Inject]
         public void Construct(StateMachine stateMachine)
@@ -31,8 +31,8 @@ namespace FunnySlots {
         {
             SharedData sharedData = new SharedData();
             
-            _cardSpriteSelectionService = new CardsSpriteSelectorService(Configuration.CardsData);
-            _fieldPositionService = new FieldPositionsService(Configuration, sharedData);
+            _cardSpriteSelectionService = new CardsInitializeDataService(Configuration.CardsData);
+            _cardPositionService = new CardPositionsService(Configuration, sharedData);
             
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world, sharedData);
@@ -50,7 +50,7 @@ namespace FunnySlots {
                 
                 .Add (new HudButtonsSystem ())
                 .Add (new StartRollSystem ())
-                .Add (new StopCardInTargetPosition ())
+                .Add (new StopCardInTargetPositionSystem ())
                 .Add (new CreateNewCardsSystem ())
                 
                 .Add( new CheckWinSystem ())
@@ -74,7 +74,7 @@ namespace FunnySlots {
                 .Inject(Configuration, SceneData)
                 
                 .Inject(_cardSpriteSelectionService)
-                .Inject(_fieldPositionService)
+                .Inject(_cardPositionService)
                 .Inject(_stateMachine)
                 
                 .InjectUgui(UguiEmitter)

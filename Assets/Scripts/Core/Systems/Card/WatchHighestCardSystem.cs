@@ -15,16 +15,19 @@ namespace FunnySlots
         {
             TryInitHighestCards();
 
-            foreach (var highestCardInRow in _highestCards.Value)
-            {
-                var row = highestCardInRow.Get<HighestCardInRow>(_world).Row;
-                int potentialHighestCardInRow = GetCardWithMaxYPositionInRow(row);
+            foreach (var highestCardInRow in _highestCards.Value) 
+                SelectHighestCardInRow(highestCardInRow);
+        }
 
-                if (potentialHighestCardInRow != highestCardInRow)
-                {
-                    highestCardInRow.Del<HighestCardInRow>(_world);
-                    potentialHighestCardInRow.Get<HighestCardInRow>(_world).Row = row;
-                }
+        private void SelectHighestCardInRow(int currentHighestCardInRow)
+        {
+            var row = currentHighestCardInRow.Get<HighestCardInRow>(_world).Row;
+            int potentialHighestCardInRow = GetCardWithMaxYPositionInRow(row);
+
+            if (potentialHighestCardInRow != currentHighestCardInRow)
+            {
+                currentHighestCardInRow.Del<HighestCardInRow>(_world);
+                potentialHighestCardInRow.Get<HighestCardInRow>(_world).Row = row;
             }
         }
 

@@ -10,14 +10,13 @@ namespace FunnySlots
     {
         private EcsFilterInject<Inc<CardInsideField, CardData>> _cardsInsideField;
 
-        private EcsCustomInject<FieldPositionsService> _positionService;
+        private EcsCustomInject<CardPositionsService> _positionService;
         private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;
         
         public void Run(IEcsSystems systems)
         {
-            var sharedData = systems.GetShared<SharedData>();
             bool hasWinCombinations = false;
             
             foreach (var cardInsideField in _cardsInsideField.Value)
@@ -25,12 +24,9 @@ namespace FunnySlots
                 ref var cardData = ref cardInsideField.Get<CardData>(_world);
                 
                 var horizontalCards = _positionService.Value.GetAllHorizontalCardsByCard(cardInsideField);
-                var verticalCards = _positionService.Value.GetAllHorizontalCardsByCard(cardInsideField);
                 var id = cardInsideField.Get<CardData>(_world).InitialData.Id;
 
                 if (CheckCombinations(horizontalCards, cardData, id) > 0)
-                    hasWinCombinations = true;
-                if (CheckCombinations(verticalCards, cardData, id) > 0)
                     hasWinCombinations = true;
             }
             

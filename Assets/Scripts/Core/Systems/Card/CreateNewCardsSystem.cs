@@ -1,6 +1,5 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace FunnySlots
 {
@@ -8,41 +7,38 @@ namespace FunnySlots
     {
         private EcsFilterInject<Inc<HighestCardInRow, CardData, CardViewRef>> _highestCards;
 
-        private EcsCustomInject<CardsSpriteSelectorService> _spriteSelector;
+        private EcsCustomInject<CardsInitializeDataService> _cardsInitializeDataService;
+        private EcsCustomInject<CardPositionsService> _cardsPositionsService;
         private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;
 
         public void Run(IEcsSystems systems)
         {
-            float createCardClippingDistanceY = _configuration.Value.ExtraCells.y * _configuration.Value.CellSize.y;
-            
             foreach (int highestCardEntity in _highestCards.Value)
             {
                 ref CardData highestCardData = ref highestCardEntity.Get<CardData>(_world);
                 
-                if (highestCardData.Position.y < createCardClippingDistanceY) 
-                    CreateNewCardAboveHighest(ref highestCardData, highestCardEntity);
+                if (HighestCardBelowClippingDistance(ref highestCardData)) 
+                    CreateNewCardAboveHighest(ref highestCardData);
             }
         }
 
-        private void CreateNewCardAboveHighest(ref CardData highestCardData, int highestCardEntity)
-        {
-            CardInitializeData cardInitializeData = _spriteSelector.Value.GetRandomCardEntryData();
-            Vector2 position = highestCardData.Position + OneCardUpOffset();
+        private bool HighestCardBelowClippingDistance(ref CardData highestCardData) => 
+            _cardsPositionsService.Value.IsPositionBelowTopClippingDistance(highestCardData.Position);
 
+        private void CreateNewCardAboveHighest(ref CardData highestCardData)
+        {
             int createdCardEntity = _world.NewEntity();
+            
             ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
 
-            cardCreationData.InitialData = cardInitializeData;
-            cardCreationData.Position = position;
-            
+            cardCreationData.InitialData = _cardsInitializeDataService.Value.GetRandomCardEntryData();
+            cardCreationData.Position = _cardsPositionsService.Value.GetPositionForCellAbove(highestCardData.Position);
             cardCreationData.Row = highestCardData.Row;
             cardCreationData.IsMoving = highestCardData.IsMoving;
 
             createdCardEntity.Set<CreateCardEvent>(_world);
         }
-
-        private Vector2 OneCardUpOffset() => new(0, _configuration.Value.CellSize.y);
     }
 }
