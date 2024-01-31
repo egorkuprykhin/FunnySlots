@@ -20,7 +20,7 @@ MonoBehaviour:
   CardMoveSpeed: {x: 0, y: -75}
   RollingTimeRange: {x: 1.2, y: 1.6}
   StoppingTimeRange: {x: 0.4, y: 0.4}
-  TimeBeforeWinEventMs: 50
+  WinTimeMs: 250
   MinCombinationX: 3
   MinCombinationY: 3
   CombinationScore: 10

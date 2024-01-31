@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -11,6 +12,7 @@ namespace FunnySlots
         private EcsFilterInject<Inc<WinFrameViewRef>> _winFrames;
 
         private EcsCustomInject<FieldPositionsService> _fieldPosService;
+        private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;
         
@@ -27,9 +29,18 @@ namespace FunnySlots
                         card.Set<CardInsideField>(_world);
                     }
                 }
-                
+
                 checkWinEvent.Del<CheckWinEvent>(_world);
+                
+                ResetRollingStateAfterWin(systems.GetShared<SharedData>());
             }
+        }
+
+        private async void ResetRollingStateAfterWin(SharedData sharedData)
+        {
+            await UniTask.Delay(_configuration.Value.WinTimeMs);
+            
+            sharedData.ResetRollingState();
         }
     }
 }

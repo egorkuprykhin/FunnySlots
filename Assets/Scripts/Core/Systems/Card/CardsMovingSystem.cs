@@ -14,16 +14,29 @@ namespace FunnySlots
         public void Run(IEcsSystems systems)
         {
             foreach (int entity in _cards.Value)
-                if (entity.Get<CardData>(_world).IsMoving)
-                    Move(entity);
+            {
+                ref var cardData = ref entity.Get<CardData>(_world);
+                
+                if (cardData.IsMoving)
+                    Move(ref cardData);
+                
+                else if (entity.Has<TargetPosition>(_world))
+                {
+                    SetPosition(ref cardData, entity.Get<TargetPosition>(_world).Value);
+                    entity.Del<TargetPosition>(_world);
+                }
+            }
         }
 
-        private void Move(int entity)
+        private void Move(ref CardData cardData)
         {
-            ref var position = ref entity.Get<CardData>(_world).Position;
-            var deltaPosition  =  _configuration.Value.CardMoveSpeed * Time.deltaTime;
-            
-            position += deltaPosition;
+            var position  = cardData.Position + _configuration.Value.CardMoveSpeed * Time.deltaTime;
+            SetPosition(ref cardData, position);
+        }
+
+        private void SetPosition(ref CardData cardData, Vector2 position)
+        {
+            cardData.Position = position;
         }
     }
 }

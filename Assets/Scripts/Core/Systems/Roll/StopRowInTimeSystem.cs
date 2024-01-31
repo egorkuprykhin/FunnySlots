@@ -7,7 +7,7 @@ namespace FunnySlots
     public class StopRowInTimeSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<StopRowInTime>> _stopRowsInTime;
-        private EcsFilterInject<Inc<CardData>, Exc<TargetPosition>> _cards;
+        private EcsFilterInject<Inc<CardData>> _cards;
 
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
@@ -30,11 +30,12 @@ namespace FunnySlots
             foreach (int cardEntity in _cards.Value)
             {
                 ref var cardData = ref cardEntity.Get<CardData>(_world);
-
+                
                 if (cardData.Row == stoppingRow)
                 {
-                    cardEntity.Get<TargetPosition>(_world).Value =
-                        GetTargetPositionForCard(cardEntity);
+                    if (!cardEntity.Has<TargetPosition>(_world))
+                        cardEntity.Get<TargetPosition>(_world).Value =
+                            GetTargetPositionForCard(cardEntity);
                 }
             }
             
@@ -52,12 +53,13 @@ namespace FunnySlots
         private Vector2 GetNearCellPositionBelow(Vector2 pos)
         {
             var cellSize = _configuration.Value.CellSize;
+            var fieldSize = _configuration.Value.FieldSize;
             var minOffset = _configuration.Value.CellsOffsetToDestroyCard;
 
-            float minTargetY = Mathf.Sign(-1) * cellSize.y * minOffset;
+            float minTargetY = Mathf.Sign(-1) * cellSize.y * (1 + fieldSize.y);
             float targetY = minTargetY;
             
-            while (targetY <= pos.y)
+            while (targetY < pos.y)
                 targetY += cellSize.y;
             targetY -= cellSize.y;
 

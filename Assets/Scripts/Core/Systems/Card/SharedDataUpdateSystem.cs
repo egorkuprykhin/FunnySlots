@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 
 namespace FunnySlots.Systems
 {
-    public class SharedDataUpdater : IEcsRunSystem
+    public class SharedDataUpdateSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<CardData>> _cards;
         private EcsWorldInject _world;

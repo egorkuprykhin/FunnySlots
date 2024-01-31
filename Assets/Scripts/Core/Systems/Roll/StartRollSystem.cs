@@ -54,16 +54,19 @@ namespace FunnySlots
 
         private async void CreateStopRowTimingsAndEntities()
         {
-            float rollingTime = CalculateRollingTime();
-            float stoppingTime = CalculateStoppingTime();
+            float rollingTimeSeed = CalculateRollingTime();
+            float stoppingTimeSeed = CalculateStoppingTime();
             
             foreach (int highestCardEntity in _highestCards.Value)
             {
                 int row = highestCardEntity.Get<HighestCardInRow>(_world).Row;
-                CreateStopRowInTimeEntity(row, CalculateStopTimingForRow(row, rollingTime, stoppingTime));
+                var stoppingTime = CalculateStopTimingForRow(row, rollingTimeSeed, stoppingTimeSeed);
+                
+                CreateStopRowInTimeEntity(row, stoppingTime);
+                
             }
 
-            float delay = rollingTime + stoppingTime * _configuration.Value.FieldSize.x;
+            float delay = rollingTimeSeed + stoppingTimeSeed * _configuration.Value.FieldSize.x;
             int delayMs = Mathf.CeilToInt(delay * 1000f);
             
             await UniTask.Delay(delayMs);
@@ -83,18 +86,15 @@ namespace FunnySlots
             playSoundEvent.NeedPlay = false;
         }
 
-        private async UniTask WaitUntilAllCardsStopped()
-        {
+        private async UniTask WaitUntilAllCardsStopped() =>
             await UniTask.WaitUntil(() =>
             {
                 if (_world.Value.IsAlive())
                     foreach (int card in _cards.Value)
                         if (card.Get<CardData>(_world).IsMoving)
                             return false;
-
                 return true;
             });
-        }
 
         private void StartRollCards()
         {
@@ -113,7 +113,7 @@ namespace FunnySlots
 
         private float CalculateStopTimingForRow(int row, float rollingTime, float stoppingTime)
         {
-            var stopRowTiming = rollingTime + row * stoppingTime;
+            var stopRowTiming = rollingTime + stoppingTime * row;
             return stopRowTiming;
         }
 

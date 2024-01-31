@@ -9,15 +9,16 @@ namespace States
     public class MenuState : IState
     {
         [Inject] private readonly StateMachine _stateMachine;
-        
-        [Inject] private readonly MenuView _menuView;
-        [Inject] private GameSceneData _sceneData;
+        [Inject] private readonly GameSceneData _sceneData;
 
         [Inject] private readonly PolicyScreenView _policyScreenView;
+        [Inject] private readonly MenuView _menuView;
+
 
         public void Enter()
         {
             _sceneData.MenuCamera.gameObject.SetActive(true);
+            _sceneData.BackSoundAudioSource.Play();
             _menuView.Show();
             
             SubscribeMenuButtons();
@@ -27,6 +28,7 @@ namespace States
         public void Exit()
         {
             _menuView.Hide();
+            _sceneData.BackSoundAudioSource.Stop();
             _sceneData.MenuCamera.gameObject.SetActive(false);
         }
 

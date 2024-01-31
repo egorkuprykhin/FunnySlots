@@ -16,8 +16,8 @@ namespace FunnySlots
             {
                 ref CardData cardData = ref entity.Get<CardData>(_world);
                 ref TargetPosition targetPosition = ref entity.Get<TargetPosition>(_world);
-
-                if (CardInPosition(cardData, targetPosition))
+                
+                if (CardInPosition(ref cardData, ref targetPosition))
                 {
                     cardData.Position = targetPosition.Value;
                     cardData.IsMoving = false;
@@ -27,7 +27,7 @@ namespace FunnySlots
             }
         }
 
-        private static bool CardInPosition(CardData cardData, TargetPosition targetPosition)
+        private static bool CardInPosition(ref CardData cardData, ref TargetPosition targetPosition)
         {
             return cardData.Position.y <= targetPosition.Value.y;
         }

@@ -19,7 +19,7 @@ namespace FunnySlots
         public Vector2 RollingTimeRange;
         public Vector2 StoppingTimeRange;
 
-        public int TimeBeforeWinEventMs;
+        public int WinTimeMs;
         
         public int MinCombinationX;
         public int MinCombinationY;

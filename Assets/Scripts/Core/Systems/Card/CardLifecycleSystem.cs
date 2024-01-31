@@ -23,14 +23,14 @@ namespace FunnySlots
 
         private void CreateCardView(int entity)
         {
-            var createCardData = entity.Get<CardData>(_world);
+            ref var cardData = ref entity.Get<CardData>(_world);
 
             var cardPrefab = _configuration.Value.CardView;
-            var position = createCardData.Position;
+            var position = cardData.Position;
 
             CardView instance = Object.Instantiate(cardPrefab, position, Quaternion.identity);
 
-            instance.CardRenderer.sprite = createCardData.InitialData.Sprite;
+            instance.CardRenderer.sprite = cardData.InitialData.Sprite;
 
             entity.Get<CardViewRef>(_world).CardView = instance;
             

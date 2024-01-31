@@ -40,20 +40,18 @@ namespace FunnySlots {
                 .Add (new InitWorldSystem ())
                 .Add (new InitCameraSystem ())
                 .Add (new InitFieldMaskSystem ())
-                .Add (new SharedDataUpdater ())
+                .Add (new SharedDataUpdateSystem ())
                 .Add (new SoundSystem ())
                 
                 .Add (new CardLifecycleSystem ())
-                .Add (new CreateNewCardsSystem ())
                 .Add (new CardsMovingSystem ())
                 
                 .Add (new WatchHighestCardSystem ())
                 
-                .Add (new HudPlayButtonSystem ())
-                .Add (new HudBackButtonSystem ())
+                .Add (new HudButtonsSystem ())
                 .Add (new StartRollSystem ())
-                .Add (new StopRowInTimeSystem ())
                 .Add (new StopCardInTargetPosition ())
+                .Add (new CreateNewCardsSystem ())
                 
                 .Add( new CheckWinSystem ())
                 .Add( new WinRollSystem ())
@@ -62,7 +60,7 @@ namespace FunnySlots {
                 .Add (new ScoresSystem ())
                 
                 .Add (new DestroyOldCardsSystem ())
-                
+                .Add (new StopRowInTimeSystem ())
                 
                 
                 // register additional worlds here, for example:

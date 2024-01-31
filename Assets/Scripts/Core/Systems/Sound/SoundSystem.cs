@@ -21,11 +21,12 @@ namespace FunnySlots.Systems
                 if (playSound.Get<PlaySoundEvent>(_world).NeedPlay)
                 {
                     CoreSound type = playSound.Get<PlaySoundEvent>(_world).Type;
-                
-                    var soundData = _configuration.Value.Sounds.Sounds.First(sound => sound.Event == type);
+                    SoundDataEntry soundData = _configuration.Value.Sounds.Sounds.FirstOrDefault(sound => sound.Event == type);
                     
-                    foreach (var clip in soundData.Clips)
-                        _sceneData.Value.AudioSource.PlayOneShot(clip);
+                    if (soundData != null && soundData.Clips.Length > 0)
+                        foreach (var clip in soundData.Clips)
+                            if (clip != null)
+                                _sceneData.Value.AudioSource.PlayOneShot(clip);
                 }
                 else
                     _sceneData.Value.AudioSource.Stop();

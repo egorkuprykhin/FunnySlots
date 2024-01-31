@@ -17,7 +17,9 @@ namespace FunnySlots
         
         public void Run(IEcsSystems systems)
         {
-            bool playWinSound = false;
+            var sharedData = systems.GetShared<SharedData>();
+            bool hasWinCombinations = false;
+            
             foreach (var cardInsideField in _cardsInsideField.Value)
             {
                 ref var cardData = ref cardInsideField.Get<CardData>(_world);
@@ -27,12 +29,12 @@ namespace FunnySlots
                 var id = cardInsideField.Get<CardData>(_world).InitialData.Id;
 
                 if (CheckCombinations(horizontalCards, cardData, id) > 0)
-                    playWinSound = true;
+                    hasWinCombinations = true;
                 if (CheckCombinations(verticalCards, cardData, id) > 0)
-                    playWinSound = true;
+                    hasWinCombinations = true;
             }
             
-            if(playWinSound)
+            if (hasWinCombinations)
                 PlayWinSound();
         }
         

@@ -15,21 +15,21 @@ namespace FunnySlots
 
         public void Run(IEcsSystems systems)
         {
-            float offsetYToCreateCard = _configuration.Value.ExtraCells.y * _configuration.Value.CellSize.y;
+            float createCardClippingDistanceY = _configuration.Value.ExtraCells.y * _configuration.Value.CellSize.y;
             
-            foreach (int entity in _highestCards.Value)
+            foreach (int highestCardEntity in _highestCards.Value)
             {
-                ref CardData highestCardData = ref entity.Get<CardData>(_world);
+                ref CardData highestCardData = ref highestCardEntity.Get<CardData>(_world);
                 
-                if (highestCardData.Position.y < offsetYToCreateCard) 
-                    CreateNewCardAboveHighest(ref highestCardData);
+                if (highestCardData.Position.y < createCardClippingDistanceY) 
+                    CreateNewCardAboveHighest(ref highestCardData, highestCardEntity);
             }
         }
 
-        private void CreateNewCardAboveHighest(ref CardData highestCardData)
+        private void CreateNewCardAboveHighest(ref CardData highestCardData, int highestCardEntity)
         {
             CardInitializeData cardInitializeData = _spriteSelector.Value.GetRandomCardEntryData();
-            Vector2 position = highestCardData.Position + new Vector2(0, _configuration.Value.CellSize.y);
+            Vector2 position = highestCardData.Position + OneCardUpOffset();
 
             int createdCardEntity = _world.NewEntity();
             ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
@@ -39,8 +39,10 @@ namespace FunnySlots
             
             cardCreationData.Row = highestCardData.Row;
             cardCreationData.IsMoving = highestCardData.IsMoving;
-            
+
             createdCardEntity.Set<CreateCardEvent>(_world);
         }
+
+        private Vector2 OneCardUpOffset() => new(0, _configuration.Value.CellSize.y);
     }
 }

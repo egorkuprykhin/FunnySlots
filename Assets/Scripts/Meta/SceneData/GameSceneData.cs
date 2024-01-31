@@ -10,5 +10,6 @@ namespace SceneData
         public PolicyScreenView PolicyScreenView;
         public Camera MenuCamera;
         public ColorPrepareService ColorPrepareService;
+        public AudioSource BackSoundAudioSource;
     }
 }
