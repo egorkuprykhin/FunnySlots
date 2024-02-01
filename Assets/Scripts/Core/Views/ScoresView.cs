@@ -2,7 +2,7 @@ using TMPro;
 
 namespace FunnySlots
 {
-    public class ScoreView : CoreView
+    public class ScoresView : CoreView
     {
         public TMP_Text ScoreValue;
     }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FunnySlots.Sound;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace FunnySlots
 {
@@ -54,7 +55,8 @@ namespace FunnySlots
                 {
                     combinations++;
 
-                    CardWinFrameView instance = _coreFactory.Value.CreateCardWinFrame(combinationCardData.Position);
+                    CardWinFrameView instance = 
+                        _coreFactory.Value.Create<CardWinFrameView, Vector2>(combinationCardData.Position);
                     
                     AddViewRef(combinationCard, instance);
                     SendAddScoresEvent();

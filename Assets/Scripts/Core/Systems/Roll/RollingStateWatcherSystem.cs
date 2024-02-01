@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace FunnySlots
 {
@@ -31,17 +30,13 @@ namespace FunnySlots
                 ResetRollingStateAfterDelay();
         }
 
-        private void SetRollingState(bool rollingState)
-        {
-            Debug.Log("SetRollingState");
+        private void SetRollingState(bool rollingState) => 
             _rollingStateEntity.Get<RollingState>(_world).IsRolling = rollingState;
-        }
 
         private async void ResetRollingStateAfterDelay()
         {
             await UniTask.Delay(_configuration.Value.WinTimeMs);
 
-            Debug.Log("ResetRollingStateAfterDelay");
             SetRollingState(false);
         }
     }

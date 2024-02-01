@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace FunnySlots
 {
-    public class CardWinFrameView : MonoBehaviour
+    public class CardWinFrameView : CoreView
     {
     }
 }

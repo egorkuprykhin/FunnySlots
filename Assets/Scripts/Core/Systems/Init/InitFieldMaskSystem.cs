@@ -12,7 +12,7 @@ namespace FunnySlots
         
         public void Init(IEcsSystems systems)
         {
-            MaskView instance = _factory.Value.CreateMask();
+            MaskView instance = _factory.Value.Create<MaskView>();
             InitView(instance);
         }
 

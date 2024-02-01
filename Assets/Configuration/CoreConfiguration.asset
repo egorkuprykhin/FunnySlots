@@ -26,7 +26,7 @@ MonoBehaviour:
   CombinationScore: 10
   CardView: {fileID: 983129314610831027, guid: ab6fc87a838f4493ea0006736fd9fb25, type: 3}
   CardWinFrameView: {fileID: 6347676260594506665, guid: d31fd566a075f47599ba388bfb79eeae, type: 3}
-  ScoreView: {fileID: 6710646643644736514, guid: 28cd08b2d3c19468198990df7a902c0f, type: 3}
+  ScoresView: {fileID: 6710646643644736514, guid: 28cd08b2d3c19468198990df7a902c0f, type: 3}
   MaskView: {fileID: 6698521532553511756, guid: ff7597213408e44c285e82d63f95a627, type: 3}
   CardsData:
     Cards:

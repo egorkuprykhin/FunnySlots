@@ -30,7 +30,6 @@ namespace FunnySlots
                 StartRollCards();
                 PlayRollSound();
                 
-                Debug.Log("Delete start roll event");
                 startRollEvent.Del<StartRollEvent>(_world);
             }
         }

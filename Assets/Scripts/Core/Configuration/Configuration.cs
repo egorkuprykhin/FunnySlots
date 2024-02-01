@@ -28,7 +28,7 @@ namespace FunnySlots
         [Header("Prefabs")]
         public CardView CardView;
         public CardWinFrameView CardWinFrameView;
-        public ScoreView ScoreView;
+        public ScoresView ScoresView;
         public MaskView MaskView;
 
         [Header("Cards")]

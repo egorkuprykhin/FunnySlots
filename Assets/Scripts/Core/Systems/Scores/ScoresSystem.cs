@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityEngine;
 
 namespace FunnySlots
 {
@@ -53,7 +54,7 @@ namespace FunnySlots
 
         private void InitHudScoresView()
         {
-            ScoreView instance = _coreFactory.Value.CreateScoresView(_sceneData.Value.ScoreViewParent);
+            ScoresView instance = _coreFactory.Value.Create<ScoresView, Transform>(_sceneData.Value.ScoreViewParent);
             _scoresEntity.Get<ScoreViewRef>(_world).Value = instance;
         }
     }
