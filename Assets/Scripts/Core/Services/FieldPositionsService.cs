@@ -6,7 +6,7 @@ using Vector2 = UnityEngine.Vector2;
 
 namespace FunnySlots
 {
-    public class CardPositionsService
+    public class FieldPositionsService
     {
         private readonly Configuration _configuration;
         private readonly SharedData _sharedData;
@@ -19,7 +19,7 @@ namespace FunnySlots
         private Vector2 _oneCellUpOffset => new(0, _cellSize.y);
 
 
-        public CardPositionsService(Configuration configuration, SharedData sharedData)
+        public FieldPositionsService(Configuration configuration, SharedData sharedData)
         {
             _configuration = configuration;
             _sharedData = sharedData;
@@ -87,5 +87,8 @@ namespace FunnySlots
 
             return combinationCards.OrderBy( card => _sharedData.CardsToPositions[card].x).ToList();
         }
+
+        public float GetCameraSize() => 
+            _cellSize.x * (_fieldSize.x + 1) + _configuration.CameraPadding * 2;
     }
 }

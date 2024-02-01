@@ -9,7 +9,7 @@ namespace FunnySlots
             _cardsData = cardsData;
         }
 
-        public CardInitializeData GetRandomCardEntryData()
+        public CardInitializeData GetRandomCardInitializeData()
         {
             var randomIndex = UnityEngine.Random.Range(0, _cardsData.Cards.Count);
             return _cardsData.Cards[randomIndex];

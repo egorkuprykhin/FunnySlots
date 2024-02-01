@@ -3,11 +3,11 @@ using Leopotam.EcsLite.Di;
 
 namespace FunnySlots
 {
-    public class DestroyOldCardsSystem : IEcsRunSystem
+    public class DestroyCardRequestSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<CardData, CardViewRef>, Exc<HighestCardInRow, DestroyCardEvent>> _cards;
 
-        private EcsCustomInject<CardPositionsService> _cardPositionsService;
+        private EcsCustomInject<FieldPositionsService> _cardPositionsService;
         private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;

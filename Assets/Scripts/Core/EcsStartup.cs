@@ -19,7 +19,8 @@ namespace FunnySlots {
         public EcsUguiEmitter UguiEmitter;
 
         private CardsInitializeDataService _cardSpriteSelectionService;
-        private CardPositionsService _cardPositionService;
+        private FieldPositionsService _fieldPositionsService;
+        private CoreFactory _coreFactory;
 
         [Inject]
         public void Construct(StateMachine stateMachine)
@@ -32,7 +33,8 @@ namespace FunnySlots {
             SharedData sharedData = new SharedData();
             
             _cardSpriteSelectionService = new CardsInitializeDataService(Configuration.CardsData);
-            _cardPositionService = new CardPositionsService(Configuration, sharedData);
+            _fieldPositionsService = new FieldPositionsService(Configuration, sharedData);
+            _coreFactory = new CoreFactory(Configuration);
             
             _world = new EcsWorld ();
             _systems = new EcsSystems (_world, sharedData);
@@ -43,24 +45,30 @@ namespace FunnySlots {
                 .Add (new SharedDataUpdateSystem ())
                 .Add (new SoundSystem ())
                 
-                .Add (new CardLifecycleSystem ())
-                .Add (new CardsMovingSystem ())
+                .Add (new CreateCardSystem ())
+                .Add (new MoveCardSystem ())
                 
                 .Add (new WatchHighestCardSystem ())
                 
                 .Add (new HudButtonsSystem ())
+                
+                .Add(new RollingStateWatcherSystem ())
+                .Add(new MetaMediatorSystem ())
+                
                 .Add (new StartRollSystem ())
                 .Add (new StopCardInTargetPositionSystem ())
-                .Add (new CreateNewCardsSystem ())
+                .Add (new CreateCardRequestSystem ())
                 
                 .Add( new CheckWinSystem ())
-                .Add( new WinRollSystem ())
+                .Add( new WinSystem ())
                 
                 .Add (new UpdateViewPositionSystem ())
                 .Add (new ScoresSystem ())
                 
-                .Add (new DestroyOldCardsSystem ())
-                .Add (new StopRowInTimeSystem ())
+                .Add (new DestroyCardRequestSystem ())
+                .Add (new StopRowInTimeRequestSystem ())
+                
+                .Add(new DestroyCardSystem ())
                 
                 
                 // register additional worlds here, for example:
@@ -73,8 +81,9 @@ namespace FunnySlots {
                 
                 .Inject(Configuration, SceneData)
                 
+                .Inject(_coreFactory)
                 .Inject(_cardSpriteSelectionService)
-                .Inject(_cardPositionService)
+                .Inject(_fieldPositionsService)
                 .Inject(_stateMachine)
                 
                 .InjectUgui(UguiEmitter)

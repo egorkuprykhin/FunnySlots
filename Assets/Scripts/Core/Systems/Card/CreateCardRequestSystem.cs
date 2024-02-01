@@ -3,12 +3,12 @@ using Leopotam.EcsLite.Di;
 
 namespace FunnySlots
 {
-    public class CreateNewCardsSystem : IEcsRunSystem
+    public class CreateCardRequestSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<HighestCardInRow, CardData, CardViewRef>> _highestCards;
 
         private EcsCustomInject<CardsInitializeDataService> _cardsInitializeDataService;
-        private EcsCustomInject<CardPositionsService> _cardsPositionsService;
+        private EcsCustomInject<FieldPositionsService> _cardsPositionsService;
         private EcsCustomInject<Configuration> _configuration;
         
         private EcsWorldInject _world;
@@ -33,7 +33,7 @@ namespace FunnySlots
             
             ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
 
-            cardCreationData.InitialData = _cardsInitializeDataService.Value.GetRandomCardEntryData();
+            cardCreationData.InitialData = _cardsInitializeDataService.Value.GetRandomCardInitializeData();
             cardCreationData.Position = _cardsPositionsService.Value.GetPositionForCellAbove(highestCardData.Position);
             cardCreationData.Row = highestCardData.Row;
             cardCreationData.IsMoving = highestCardData.IsMoving;

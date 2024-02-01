@@ -30,6 +30,7 @@ namespace FunnySlots
                 StartRollCards();
                 PlayRollSound();
                 
+                Debug.Log("Delete start roll event");
                 startRollEvent.Del<StartRollEvent>(_world);
             }
         }
@@ -44,10 +45,10 @@ namespace FunnySlots
         private void ClearLastCards()
         {
             foreach (int cardEntity in _cardsToClean.Value)
-                if (cardEntity.Has<WinFrameViewRef>(_world))
+                if (cardEntity.Has<CardWinFrameViewRef>(_world))
                 {
-                    Object.Destroy(cardEntity.Get<WinFrameViewRef>(_world).Value.gameObject);
-                    cardEntity.Del<WinFrameViewRef>(_world);
+                    Object.Destroy(cardEntity.Get<CardWinFrameViewRef>(_world).Value.gameObject);
+                    cardEntity.Del<CardWinFrameViewRef>(_world);
                     cardEntity.Del<CardInsideField>(_world);
                 }
         }
@@ -75,7 +76,7 @@ namespace FunnySlots
             if (_world.Value.IsAlive())
             {
                 StopRollSound();
-                _world.NewEntity().Set<CheckWinEvent>(_world);
+                _world.NewEntity().Set<StopRollEvent>(_world);
             }
         }
 

@@ -1,8 +1,10 @@
+using System;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
 namespace FunnySlots.Systems
 {
+    [Obsolete]
     public class SharedDataUpdateSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<CardData>> _cards;

@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using FunnySlots.Sound;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace FunnySlots
 {
-    public class WinRollSystem : IEcsRunSystem
+    public class WinSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<CardInsideField, CardData>> _cardsInsideField;
 
-        private EcsCustomInject<CardPositionsService> _positionService;
+        private EcsCustomInject<FieldPositionsService> _positionService;
         private EcsCustomInject<Configuration> _configuration;
-        
+        private EcsCustomInject<CoreFactory> _coreFactory;
+
         private EcsWorldInject _world;
-        
+
         public void Run(IEcsSystems systems)
         {
             bool hasWinCombinations = false;
@@ -50,25 +50,35 @@ namespace FunnySlots
                 if (combinationCardData.Position == cardData.Position)
                     continue;
 
-                if (combinationCard.Has<CardInsideField>(_world)
-                    &&
-                    combinationCard.Get<CardData>(_world).InitialData.Id == id
-                    &&
-                    !combinationCard.Has<WinFrameViewRef>(_world))
+                if (WinnerCard(id, combinationCard))
                 {
                     combinations++;
+
+                    CardWinFrameView instance = _coreFactory.Value.CreateCardWinFrame(combinationCardData.Position);
                     
-                    CardWinFrameView prefab = _configuration.Value.CardWinFrameView;
-                    var position = combinationCardData.Position;
-                    
-                    CardWinFrameView winViewInstance = Object.Instantiate(prefab, position, Quaternion.identity);
-                    combinationCard.Get<WinFrameViewRef>(_world).Value = winViewInstance;
-                    
-                    _world.NewEntity().Get<AddScoresEvent>(_world).Value = _configuration.Value.CombinationScore;
+                    AddViewRef(combinationCard, instance);
+                    SendAddScoresEvent();
                 }
             }
 
             return combinations;
+        }
+
+        private void AddViewRef(int combinationCard, CardWinFrameView instance)
+        {
+            combinationCard.Get<CardWinFrameViewRef>(_world).Value = instance;
+        }
+
+        private void SendAddScoresEvent() => 
+            _world.NewEntity().Get<AddScoresEvent>(_world).Value = _configuration.Value.CombinationScore;
+
+        private bool WinnerCard(string id, int combinationCard)
+        {
+            return combinationCard.Has<CardInsideField>(_world)
+                   &&
+                   combinationCard.Get<CardData>(_world).InitialData.Id == id
+                   &&
+                   !combinationCard.Has<CardWinFrameViewRef>(_world);
         }
     }
 }

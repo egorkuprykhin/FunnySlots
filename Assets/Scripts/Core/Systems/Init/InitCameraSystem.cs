@@ -7,16 +7,15 @@ namespace FunnySlots
     public class InitCameraSystem : IEcsInitSystem
     {
         private EcsCustomInject<Configuration> _configuration;
+        private EcsCustomInject<FieldPositionsService> _fieldPositionService;
         private EcsCustomInject<SceneData> _sceneData;
 
         public void Init(IEcsSystems systems)
         {
             Camera camera = _sceneData.Value.MainCamera;
-            Configuration configuration = _configuration.Value;
 
             camera.orthographic = true;
-            camera.orthographicSize = 
-                configuration.CellSize.x * (configuration.FieldSize.x + 1) + configuration.CameraPadding * 2;
+            camera.orthographicSize = _fieldPositionService.Value.GetCameraSize();
         }
     }
 }

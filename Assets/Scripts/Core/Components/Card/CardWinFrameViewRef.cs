@@ -1,6 +1,6 @@
 namespace FunnySlots
 {
-    public struct WinFrameViewRef : IComponent
+    public struct CardWinFrameViewRef : IComponent
     {
         public CardWinFrameView Value;
     }

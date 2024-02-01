@@ -1,6 +1,5 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 
 namespace FunnySlots
 {
@@ -9,16 +8,17 @@ namespace FunnySlots
         private EcsFilterInject<Inc<AddScoresEvent>> _addScoresEvents;
 
         private EcsCustomInject<Configuration> _configuration;
+        private EcsCustomInject<CoreFactory> _coreFactory;
         private EcsCustomInject<SceneData> _sceneData;
-        
+
         private EcsWorldInject _world;
-        
+
         private int _scoresEntity;
-        
+
         public void Init(IEcsSystems systems)
         {
-            _scoresEntity = InitScoresEntity();
-            InitHudScoreView(_scoresEntity);
+            InitScoresEntity();
+            InitHudScoresView();
         }
 
         public void Run(IEcsSystems systems)
@@ -27,14 +27,14 @@ namespace FunnySlots
             
             foreach (int addScoreEntity in _addScoresEvents.Value)
             {
-                ref var scoresToAdd = ref addScoreEntity.Get<AddScoresEvent>(_world).Value;
-                scoresEntity.Value += scoresToAdd;
-
+                AddScores(ref scoresEntity, addScoreEntity);
                 UpdateScoresView();
-                
-                addScoreEntity.Del<AddScoresEvent>(_world);
+                DeleteAddScoresEvent(addScoreEntity);
             }
         }
+
+        private void AddScores(ref Scores scoresEntity, int addScoreEntity) => 
+            scoresEntity.Value += addScoreEntity.Get<AddScoresEvent>(_world).Value;
 
         private void UpdateScoresView()
         {
@@ -42,22 +42,19 @@ namespace FunnySlots
             _scoresEntity.Get<ScoreViewRef>(_world).Value.ScoreValue.text = scores.Value.ToString();
         }
 
-        private int InitScoresEntity()
+        private void DeleteAddScoresEvent(int addScoreEntity) => 
+            addScoreEntity.Del<AddScoresEvent>(_world);
+
+        private void InitScoresEntity()
         {
-            int scoresEntity = _world.NewEntity();
-            scoresEntity.Get<Scores>(_world).Value = 0;
-            
-            return scoresEntity;
+            _scoresEntity = _world.NewEntity();
+            _scoresEntity.Get<Scores>(_world).Value = 0;
         }
 
-        private void InitHudScoreView(int scoresEntity)
+        private void InitHudScoresView()
         {
-            var prefab = _configuration.Value.ScoreView;
-            var parent = _sceneData.Value.ScoreViewParent;
-
-            var instance = Object.Instantiate(prefab, parent);
-
-            scoresEntity.Get<ScoreViewRef>(_world).Value = instance;
+            ScoreView instance = _coreFactory.Value.CreateScoresView(_sceneData.Value.ScoreViewParent);
+            _scoresEntity.Get<ScoreViewRef>(_world).Value = instance;
         }
     }
 }

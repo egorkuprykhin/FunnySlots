@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public struct TargetPosition : IComponent
+    public struct CardTargetPosition : IComponent
     {
         public Vector2 Value;
     }

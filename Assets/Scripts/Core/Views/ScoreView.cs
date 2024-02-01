@@ -1,9 +1,8 @@
 using TMPro;
-using UnityEngine;
 
 namespace FunnySlots
 {
-    public class ScoreView : MonoBehaviour
+    public class ScoreView : CoreView
     {
         public TMP_Text ScoreValue;
     }

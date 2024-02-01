@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public class CardView : MonoBehaviour
+    public class CardView : CoreView
     {
         public SpriteRenderer CardRenderer;
     }

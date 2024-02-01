@@ -1,8 +1,6 @@
-using FSM;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
-using States;
 using UnityEngine.UI;
 
 namespace FunnySlots
@@ -11,34 +9,39 @@ namespace FunnySlots
     {
         [EcsUguiNamed("PlayButton")] Button _playButton;
         [EcsUguiNamed("BackButton")] Button _backButton;
-
-        private EcsCustomInject<StateMachine> _stateMachine;
+        
+        private EcsFilterInject<Inc<RollingState>> _rollingState;
 
         private EcsWorldInject _world;
-        private SharedData _sharedData;
 
         public void Init(IEcsSystems systems)
         {
-            _sharedData = systems.GetShared<SharedData>();
-            
-            _backButton.onClick.AddListener(BackToMenu);
-            _playButton.onClick.AddListener(TryStartRollCards);
+            _backButton.onClick.AddListener(OnBackToMenuClicked);
+            _playButton.onClick.AddListener(OnStartRollClicked);
         }
 
-        private void BackToMenu()
+        private void OnBackToMenuClicked()
         {
-            _stateMachine.Value.Enter<MenuState>();
+            SendBackToMenuEvent();
         }
 
-        private void TryStartRollCards()
+        private void OnStartRollClicked()
         {
-            if (_sharedData.RollingState)
-                return;
-            
-            int newEntity = _world.NewEntity();
-            newEntity.Set<StartRollEvent>(_world);
-            
-            _sharedData.SetRollingState();
+            if (CanRoll())
+                SendStartRollEvent();
+        }
+
+        private void SendBackToMenuEvent() => 
+            _world.NewEntity().Set<BackToMenuEvent>(_world);
+
+        private void SendStartRollEvent() => 
+            _world.NewEntity().Set<StartRollEvent>(_world);
+
+        private bool CanRoll()
+        {
+            foreach (int rollingStateEntity in _rollingState.Value)
+                return ! rollingStateEntity.Get<RollingState>(_world).IsRolling;
+            return false;
         }
     }
 }

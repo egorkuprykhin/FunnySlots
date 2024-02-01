@@ -5,7 +5,7 @@ namespace FunnySlots
 {
     public class StopCardInTargetPositionSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<TargetPosition, CardData>> _cardsToStop;
+        private EcsFilterInject<Inc<CardTargetPosition, CardData>> _cardsToStop;
         
         private EcsCustomInject<Configuration> _configuration;
         private EcsWorldInject _world;
@@ -24,20 +24,20 @@ namespace FunnySlots
         private bool CardInTargetPosition(int cardEntity)
         {
             CardData cardData = cardEntity.Get<CardData>(_world);
-            TargetPosition targetPosition = cardEntity.Get<TargetPosition>(_world);
+            CardTargetPosition cardTargetPosition = cardEntity.Get<CardTargetPosition>(_world);
 
-            return cardData.Position.y <= targetPosition.Value.y;
+            return cardData.Position.y <= cardTargetPosition.Value.y;
         }
 
         private void StopCardInTargetPosition(int cardEntity)
         {
             ref CardData cardData = ref cardEntity.Get<CardData>(_world);
             
-            cardData.Position = cardEntity.Get<TargetPosition>(_world).Value;
+            cardData.Position = cardEntity.Get<CardTargetPosition>(_world).Value;
             cardData.IsMoving = false;
         }
 
         private void DeleteTargetPosition(int cardEntity) => 
-            cardEntity.Del<TargetPosition>(_world);
+            cardEntity.Del<CardTargetPosition>(_world);
     }
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace FunnySlots
 {
-    public class StopRowInTimeSystem : IEcsRunSystem
+    public class StopRowInTimeRequestSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<StopRowInTime>> _movingCardRows;
         private EcsFilterInject<Inc<CardData>> _cards;
 
         private EcsCustomInject<Configuration> _configuration;
-        private EcsCustomInject<CardPositionsService> _fieldPositionsService;
+        private EcsCustomInject<FieldPositionsService> _fieldPositionsService;
         
         private EcsWorldInject _world;
 
@@ -36,8 +36,8 @@ namespace FunnySlots
 
         private void ScheduleStopAtTargetPosition(int cardEntity)
         {
-            if (!cardEntity.Has<TargetPosition>(_world))
-                cardEntity.Get<TargetPosition>(_world).Value =
+            if (!cardEntity.Has<CardTargetPosition>(_world))
+                cardEntity.Get<CardTargetPosition>(_world).Value =
                     GetTargetPositionForCard(cardEntity);
         }
 
