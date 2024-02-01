@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace FunnySlots
 {
     public class CoreFactory
@@ -9,17 +7,23 @@ namespace FunnySlots
 
         private void InitFactories(Configuration configuration)
         {
-            Factory<MaskView>.Instance = new MaskFactory(configuration);
-
-            FactoryWithPayload<CardView, CardData>.Instance = new CardFactory(configuration);
-            FactoryWithPayload<ScoresView, Transform>.Instance = new ScoresFactory(configuration);
-            FactoryWithPayload<CardWinFrameView, Vector2>.Instance = new CardWinFrameFactory(configuration);
+            InitFactory(new MaskFactory(configuration));
+            
+            InitFactoryWithPayload(new CardFactory(configuration));
+            InitFactoryWithPayload(new ScoresFactory(configuration));
+            InitFactoryWithPayload(new CardWinFrameFactory(configuration));
         }
 
         public TView Create<TView>() where TView : CoreView => 
-            Factory<TView>.Instance.Create();
+            FactoryInstanceProxy<TView>.Instance.Create();
 
         public TView Create<TView, TPayload>(TPayload payload) where TView : CoreView => 
-            FactoryWithPayload<TView, TPayload>.Instance.Create(payload);
+            FactoryWithPayloadInstanceProxy<TView, TPayload>.Instance.Create(payload);
+        
+        private void InitFactory<TView>(IFactory<TView> factory) where TView : CoreView=>
+            FactoryInstanceProxy<TView>.Instance = factory;
+        
+        private void InitFactoryWithPayload<TView, TPayload>(IFactoryWithPayload<TView, TPayload> factory) where TView : CoreView =>
+            FactoryWithPayloadInstanceProxy<TView, TPayload>.Instance = factory;
     }
 }
