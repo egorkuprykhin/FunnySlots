@@ -20,9 +20,9 @@ namespace FunnySlots
         }
 
         private bool CardOutsideUpperClippingDistance(int entity) => 
-            _cardPositionsService.Value.IsPositionBelowBottomClippingDistance(entity.Get<CardData>(_world).Position);
+            _cardPositionsService.Value.IsPositionBelowBottomClippingDistance(entity.Get<CardData>().Position);
 
         private void DestroyCard(int entity) => 
-            entity.Set<DestroyCardEvent>(_world);
+            entity.Set<DestroyCardEvent>();
     }
 }

@@ -19,16 +19,16 @@ namespace FunnySlots
 
         private void CreateCard(int cardEntity)
         {
-            CardView instance = _coreFactory.Value.Create<CardView, CardData>(cardEntity.Get<CardData>(_world));
+            CardView instance = _coreFactory.Value.Create<CardView, CardData>(cardEntity.Get<CardData>());
             
             InitViewRef(cardEntity, instance);
             ClearCreateEvent(cardEntity);
         }
 
         private void InitViewRef(int cardEntity, CardView instance) => 
-            cardEntity.Get<CardViewRef>(_world).CardView = instance;
+            cardEntity.Get<CardViewRef>().CardView = instance;
 
         private void ClearCreateEvent(int cardEntity) => 
-            cardEntity.Del<CreateCardEvent>(_world);
+            cardEntity.Del<CreateCardEvent>();
     }
 }

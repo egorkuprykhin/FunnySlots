@@ -12,8 +12,6 @@ namespace FunnySlots
         private EcsFilterInject<Inc<StartRollEvent>> _startRollEvent;
         private EcsFilterInject<Inc<HighestCardInRow>> _highestCards;
         
-        private EcsFilterInject<Inc<CardInsideField>> _cardsToClean;
-        
         private EcsFilterInject<Inc<CardData, CardViewRef>> _cards;
 
         private EcsCustomInject<Configuration> _configuration;
@@ -25,31 +23,19 @@ namespace FunnySlots
         {
             foreach (int startRollEvent in _startRollEvent.Value)
             {
-                ClearLastCards();
                 CreateStopRowTimingsAndEntities();
                 StartRollCards();
                 PlayRollSound();
                 
-                startRollEvent.Del<StartRollEvent>(_world);
+                startRollEvent.Del<StartRollEvent>();
             }
         }
 
         private void PlayRollSound()
         {
-            ref var playSoundEvent = ref _world.NewEntity().Get<PlaySoundEvent>(_world);
-            playSoundEvent.Type = CoreSound.RollStarted;
+            ref var playSoundEvent = ref _world.NewEntity().Get<SoundEvent>();
+            playSoundEvent.Type = SoundEventType.RollStarted;
             playSoundEvent.NeedPlay = true;
-        }
-
-        private void ClearLastCards()
-        {
-            foreach (int cardEntity in _cardsToClean.Value)
-                if (cardEntity.Has<CardWinFrameViewRef>(_world))
-                {
-                    Object.Destroy(cardEntity.Get<CardWinFrameViewRef>(_world).Value.gameObject);
-                    cardEntity.Del<CardWinFrameViewRef>(_world);
-                    cardEntity.Del<CardInsideField>(_world);
-                }
         }
 
         private async void CreateStopRowTimingsAndEntities()
@@ -59,7 +45,7 @@ namespace FunnySlots
             
             foreach (int highestCardEntity in _highestCards.Value)
             {
-                int row = highestCardEntity.Get<HighestCardInRow>(_world).Row;
+                int row = highestCardEntity.Get<HighestCardInRow>().Row;
                 var stoppingTime = CalculateStopTimingForRow(row, rollingTimeSeed, stoppingTimeSeed);
                 
                 CreateStopRowInTimeEntity(row, stoppingTime);
@@ -75,14 +61,14 @@ namespace FunnySlots
             if (_world.Value.IsAlive())
             {
                 StopRollSound();
-                _world.NewEntity().Set<StopRollEvent>(_world);
+                _world.NewEntity().Set<StopRollEvent>();
             }
         }
 
         private void StopRollSound()
         {
-            ref var playSoundEvent = ref _world.NewEntity().Get<PlaySoundEvent>(_world);
-            playSoundEvent.Type = CoreSound.RollStopped;
+            ref var playSoundEvent = ref _world.NewEntity().Get<SoundEvent>();
+            playSoundEvent.Type = SoundEventType.RollStopped;
             playSoundEvent.NeedPlay = false;
         }
 
@@ -91,7 +77,7 @@ namespace FunnySlots
             {
                 if (_world.Value.IsAlive())
                     foreach (int card in _cards.Value)
-                        if (card.Get<CardData>(_world).IsMoving)
+                        if (card.Get<CardData>().IsMoving)
                             return false;
                 return true;
             });
@@ -99,16 +85,16 @@ namespace FunnySlots
         private void StartRollCards()
         {
             foreach (int card in _cards.Value)
-                card.Get<CardData>(_world).IsMoving = true;
+                card.Get<CardData>().IsMoving = true;
         }
 
         private void CreateStopRowInTimeEntity(int row, float stopTime)
         {
             int rowEntity = _world.NewEntity();
             
-            rowEntity.Get<StopRowInTime>(_world).Row = row;
-            rowEntity.Get<StopRowInTime>(_world).StopTime = stopTime;
-            rowEntity.Get<StopRowInTime>(_world).Timer = 0;
+            rowEntity.Get<StopRowInTime>().Row = row;
+            rowEntity.Get<StopRowInTime>().StopTime = stopTime;
+            rowEntity.Get<StopRowInTime>().Timer = 0;
         }
 
         private float CalculateStopTimingForRow(int row, float rollingTime, float stoppingTime)

@@ -26,6 +26,6 @@ namespace FunnySlots
             _stateMachine.Value.Enter<MenuState>();
 
         private void DeleteEvent(int eventEntity) => 
-            eventEntity.Del<BackToMenuEvent>(_world);
+            eventEntity.Del<BackToMenuEvent>();
     }
 }

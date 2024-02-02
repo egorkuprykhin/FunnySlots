@@ -36,24 +36,24 @@ namespace FunnySlots
 
         private void ScheduleStopAtTargetPosition(int cardEntity)
         {
-            if (!cardEntity.Has<CardTargetPosition>(_world))
-                cardEntity.Get<CardTargetPosition>(_world).Value =
+            if (!cardEntity.Has<CardTargetPosition>())
+                cardEntity.Get<CardTargetPosition>().Value =
                     GetTargetPositionForCard(cardEntity);
         }
 
         private Vector2 GetTargetPositionForCard(int cardEntity) => 
-            _fieldPositionsService.Value.GetPositionOfNearBelowCell(cardEntity.Get<CardData>(_world).Position);
+            _fieldPositionsService.Value.GetPositionOfNearBelowCell(cardEntity.Get<CardData>().Position);
 
         private void UpdateMovingRowTimings(int entity) => 
-            entity.Get<StopRowInTime>(_world).Timer += Time.deltaTime;
+            entity.Get<StopRowInTime>().Timer += Time.deltaTime;
 
         private bool NeedStopRow(int entity) => 
-            entity.Get<StopRowInTime>(_world).Timer > entity.Get<StopRowInTime>(_world).StopTime;
+            entity.Get<StopRowInTime>().Timer > entity.Get<StopRowInTime>().StopTime;
 
         private void ClearMovingRow(int movingCardsRowEntity) => 
-            movingCardsRowEntity.Del<StopRowInTime>(_world);
+            movingCardsRowEntity.Del<StopRowInTime>();
 
         private bool CardsInSameRow(int cardEntity, int targetMovingRowEntity) => 
-            cardEntity.Get<CardData>(_world).Row == targetMovingRowEntity.Get<StopRowInTime>(_world).Row;
+            cardEntity.Get<CardData>().Row == targetMovingRowEntity.Get<StopRowInTime>().Row;
     }
 }

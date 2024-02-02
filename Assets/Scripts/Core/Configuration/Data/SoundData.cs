@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace FunnySlots
 {
@@ -8,12 +7,5 @@ namespace FunnySlots
     public class SoundData
     {
         public List<SoundDataEntry> Sounds;
-    }
-
-    [Serializable]
-    public class SoundDataEntry
-    {
-        public CoreSound Event;
-        public AudioClip[] Clips;
     }
 }

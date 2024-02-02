@@ -17,13 +17,13 @@ namespace FunnySlots
             for (int y = 0; y < _configuration.Value.FieldSize.y + _configuration.Value.ExtraCells.y; y++)
             {
                 int newCardEntity = _world.NewEntity();
-                ref var cardCreationData = ref newCardEntity.Get<CardData>(_world);
+                ref var cardCreationData = ref newCardEntity.Get<CardData>();
 
                 cardCreationData.Position = _fieldPositionService.Value.GetPositionForCell(x, y);
                 cardCreationData.InitialData = _cardsInitializeDataService.Value.GetRandomCardInitializeData();
                 cardCreationData.Row = x;
 
-                newCardEntity.Set<CreateCardEvent>(_world);
+                newCardEntity.Set<CreateCardEvent>();
             }
         }
     }

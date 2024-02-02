@@ -21,13 +21,13 @@ namespace FunnySlots
 
         private void SelectHighestCardInRow(int currentHighestCardInRow)
         {
-            var row = currentHighestCardInRow.Get<HighestCardInRow>(_world).Row;
+            var row = currentHighestCardInRow.Get<HighestCardInRow>().Row;
             int potentialHighestCardInRow = GetCardWithMaxYPositionInRow(row);
 
             if (potentialHighestCardInRow != currentHighestCardInRow)
             {
-                currentHighestCardInRow.Del<HighestCardInRow>(_world);
-                potentialHighestCardInRow.Get<HighestCardInRow>(_world).Row = row;
+                currentHighestCardInRow.Del<HighestCardInRow>();
+                potentialHighestCardInRow.Get<HighestCardInRow>().Row = row;
             }
         }
 
@@ -42,8 +42,8 @@ namespace FunnySlots
             {
                 int highestCardInRowByPosition = GetCardWithMaxYPositionInRow(row);
                 
-                highestCardInRowByPosition.Get<HighestCardInRow>(_world).Row = 
-                    highestCardInRowByPosition.Get<CardData>(_world).Row;
+                highestCardInRowByPosition.Get<HighestCardInRow>().Row = 
+                    highestCardInRowByPosition.Get<CardData>().Row;
             }
         }
 
@@ -54,7 +54,7 @@ namespace FunnySlots
             
             foreach (int cardEntity in _cards.Value)
             {
-                ref var cardData = ref cardEntity.Get<CardData>(_world);
+                ref var cardData = ref cardEntity.Get<CardData>();
                 float cardPosY = cardData.Position.y;
 
                 if (cardData.Row == row && cardPosY > cardMaxPosY)

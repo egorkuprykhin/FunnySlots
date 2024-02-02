@@ -19,7 +19,7 @@ namespace FunnySlots
         private void InitView(MaskView instance)
         {
             int maskEntity = _world.NewEntity();
-            maskEntity.Get<MaskViewRef>(_world).Value = instance;
+            maskEntity.Get<MaskViewRef>().Value = instance;
         }
     }
 }

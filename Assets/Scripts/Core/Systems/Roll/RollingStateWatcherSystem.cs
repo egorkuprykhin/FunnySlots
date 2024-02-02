@@ -18,7 +18,7 @@ namespace FunnySlots
         public void Init(IEcsSystems systems)
         {
             _rollingStateEntity = _world.NewEntity();
-            _rollingStateEntity.Set<RollingState>(_world);
+            _rollingStateEntity.Set<RollingState>();
         }
 
         public void Run(IEcsSystems systems)
@@ -31,7 +31,7 @@ namespace FunnySlots
         }
 
         private void SetRollingState(bool rollingState) => 
-            _rollingStateEntity.Get<RollingState>(_world).IsRolling = rollingState;
+            _rollingStateEntity.Get<RollingState>().IsRolling = rollingState;
 
         private async void ResetRollingStateAfterDelay()
         {

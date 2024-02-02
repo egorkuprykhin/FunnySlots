@@ -4,10 +4,8 @@ namespace FunnySlots
     {
         private readonly CardsData _cardsData;
         
-        public CardsInitializeDataService(CardsData cardsData)
-        {
+        public CardsInitializeDataService(CardsData cardsData) => 
             _cardsData = cardsData;
-        }
 
         public CardInitializeData GetRandomCardInitializeData()
         {

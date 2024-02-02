@@ -16,7 +16,7 @@ namespace FunnySlots
         }
 
         private void SetViewPosition(int entity) =>
-            entity.Get<CardViewRef>(_world).CardView.transform.position =
-                entity.Get<CardData>(_world).Position;
+            entity.Get<CardViewRef>().CardView.transform.position =
+                entity.Get<CardData>().Position;
     }
 }

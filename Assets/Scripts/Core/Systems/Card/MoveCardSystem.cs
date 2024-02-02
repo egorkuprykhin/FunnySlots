@@ -20,7 +20,7 @@ namespace FunnySlots
 
         private void TryMove(int cardEntity)
         {
-            ref var cardData = ref cardEntity.Get<CardData>(_world);
+            ref var cardData = ref cardEntity.Get<CardData>();
             
             if (cardData.IsMoving)
                 Move(ref cardData);

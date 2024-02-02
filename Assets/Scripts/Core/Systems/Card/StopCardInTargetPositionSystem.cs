@@ -23,21 +23,21 @@ namespace FunnySlots
 
         private bool CardInTargetPosition(int cardEntity)
         {
-            CardData cardData = cardEntity.Get<CardData>(_world);
-            CardTargetPosition cardTargetPosition = cardEntity.Get<CardTargetPosition>(_world);
+            CardData cardData = cardEntity.Get<CardData>();
+            CardTargetPosition cardTargetPosition = cardEntity.Get<CardTargetPosition>();
 
             return cardData.Position.y <= cardTargetPosition.Value.y;
         }
 
         private void StopCardInTargetPosition(int cardEntity)
         {
-            ref CardData cardData = ref cardEntity.Get<CardData>(_world);
+            ref CardData cardData = ref cardEntity.Get<CardData>();
             
-            cardData.Position = cardEntity.Get<CardTargetPosition>(_world).Value;
+            cardData.Position = cardEntity.Get<CardTargetPosition>().Value;
             cardData.IsMoving = false;
         }
 
         private void DeleteTargetPosition(int cardEntity) => 
-            cardEntity.Del<CardTargetPosition>(_world);
+            cardEntity.Del<CardTargetPosition>();
     }
 }

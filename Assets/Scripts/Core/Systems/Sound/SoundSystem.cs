@@ -7,7 +7,7 @@ namespace FunnySlots.Systems
 {
     public class SoundSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<PlaySoundEvent>> _playSoundEvents;
+        private EcsFilterInject<Inc<SoundEvent>> _playSoundEvents;
         
         private EcsCustomInject<Configuration> _configuration;
         private EcsCustomInject<SceneData> _sceneData;
@@ -18,9 +18,9 @@ namespace FunnySlots.Systems
         {
             foreach (var playSound in _playSoundEvents.Value)
             {
-                if (playSound.Get<PlaySoundEvent>(_world).NeedPlay)
+                if (playSound.Get<SoundEvent>().NeedPlay)
                 {
-                    CoreSound type = playSound.Get<PlaySoundEvent>(_world).Type;
+                    SoundEventType type = playSound.Get<SoundEvent>().Type;
                     SoundDataEntry soundData = _configuration.Value.Sounds.Sounds.FirstOrDefault(sound => sound.Event == type);
                     
                     if (soundData != null && soundData.Clips.Length > 0)
@@ -31,7 +31,7 @@ namespace FunnySlots.Systems
                 else
                     _sceneData.Value.AudioSource.Stop();
 
-                playSound.Del<PlaySoundEvent>(_world);
+                playSound.Del<SoundEvent>();
             }
         }
     }

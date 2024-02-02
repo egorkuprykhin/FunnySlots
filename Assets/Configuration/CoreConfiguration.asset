@@ -63,7 +63,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 98bf64921210244848d3d7dc671b1298, type: 3}
       - {fileID: 8300000, guid: dccb321dc23594d77bc3eac3841efb57, type: 3}
       - {fileID: 8300000, guid: d02be5c3f20c1473c971d620155658f7, type: 3}
-    - Event: 2
+    - Event: 11
       Clips:
       - {fileID: 8300000, guid: 3729bd9ca0a384e90b18085c6f477e18, type: 3}
       - {fileID: 0}

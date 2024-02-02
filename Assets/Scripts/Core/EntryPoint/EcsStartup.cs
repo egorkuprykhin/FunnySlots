@@ -18,9 +18,10 @@ namespace FunnySlots {
         public SceneData SceneData;
         public EcsUguiEmitter UguiEmitter;
 
-        private CardsInitializeDataService _cardSpriteSelectionService;
-        private FieldPositionsService _fieldPositionsService;
         private CoreFactory _coreFactory;
+        private FieldPositionsService _fieldPositionsService;
+        private CombinationService _combinationsService;
+        private CardsInitializeDataService _cardInitializeDataService;
 
         [Inject]
         public void Construct(StateMachine stateMachine)
@@ -31,12 +32,16 @@ namespace FunnySlots {
         void Start ()
         {
             SharedData sharedData = new SharedData();
-            
-            _cardSpriteSelectionService = new CardsInitializeDataService(Configuration.CardsData);
-            _fieldPositionsService = new FieldPositionsService(Configuration, sharedData);
+
             _coreFactory = new CoreFactory(Configuration);
-            
+            _combinationsService = new CombinationService();
+            _fieldPositionsService = new FieldPositionsService(Configuration, sharedData);
+            _cardInitializeDataService = new CardsInitializeDataService(Configuration.CardsData);
+
             _world = new EcsWorld ();
+            
+            EcsExtensionsService.World = _world;
+            
             _systems = new EcsSystems (_world, sharedData);
             _systems
                 .Add (new InitWorldSystem ())
@@ -59,8 +64,9 @@ namespace FunnySlots {
                 .Add (new StopCardInTargetPositionSystem ())
                 .Add (new CreateCardRequestSystem ())
                 
-                .Add( new CheckWinSystem ())
-                .Add( new WinSystem ())
+                .Add( new PrepareCombinationSystem ())
+                .Add( new SelectWinCombinationSystem ())
+                .Add( new WinCombinationSystem ())
                 
                 .Add (new UpdateViewPositionSystem ())
                 .Add (new ScoresSystem ())
@@ -82,8 +88,9 @@ namespace FunnySlots {
                 .Inject(Configuration, SceneData)
                 
                 .Inject(_coreFactory)
-                .Inject(_cardSpriteSelectionService)
+                .Inject(_cardInitializeDataService)
                 .Inject(_fieldPositionsService)
+                .Inject(_combinationsService)
                 .Inject(_stateMachine)
                 
                 .InjectUgui(UguiEmitter)

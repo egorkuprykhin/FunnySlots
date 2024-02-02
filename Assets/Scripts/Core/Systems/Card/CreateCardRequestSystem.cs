@@ -17,7 +17,7 @@ namespace FunnySlots
         {
             foreach (int highestCardEntity in _highestCards.Value)
             {
-                ref CardData highestCardData = ref highestCardEntity.Get<CardData>(_world);
+                ref CardData highestCardData = ref highestCardEntity.Get<CardData>();
                 
                 if (HighestCardBelowClippingDistance(ref highestCardData)) 
                     CreateNewCardAboveHighest(ref highestCardData);
@@ -31,14 +31,14 @@ namespace FunnySlots
         {
             int createdCardEntity = _world.NewEntity();
             
-            ref var cardCreationData = ref createdCardEntity.Get<CardData>(_world);
+            ref var cardCreationData = ref createdCardEntity.Get<CardData>();
 
             cardCreationData.InitialData = _cardsInitializeDataService.Value.GetRandomCardInitializeData();
             cardCreationData.Position = _cardsPositionsService.Value.GetPositionForCellAbove(highestCardData.Position);
             cardCreationData.Row = highestCardData.Row;
             cardCreationData.IsMoving = highestCardData.IsMoving;
 
-            createdCardEntity.Set<CreateCardEvent>(_world);
+            createdCardEntity.Set<CreateCardEvent>();
         }
     }
 }

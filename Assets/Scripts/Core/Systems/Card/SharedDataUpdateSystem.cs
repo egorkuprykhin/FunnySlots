@@ -16,7 +16,7 @@ namespace FunnySlots.Systems
             
             foreach (var card in _cards.Value)
             {
-                ref var cardData = ref card.Get<CardData>(_world);
+                ref var cardData = ref card.Get<CardData>();
 
                 shared.CardsToPositions.TryAdd(card, cardData.Position);
                 shared.PositionsToCards.TryAdd(cardData.Position, card);

@@ -32,15 +32,15 @@ namespace FunnySlots
         }
 
         private void SendBackToMenuEvent() => 
-            _world.NewEntity().Set<BackToMenuEvent>(_world);
+            _world.NewEntity().Set<BackToMenuEvent>();
 
         private void SendStartRollEvent() => 
-            _world.NewEntity().Set<StartRollEvent>(_world);
+            _world.NewEntity().Set<StartRollEvent>();
 
         private bool CanRoll()
         {
             foreach (int rollingStateEntity in _rollingState.Value)
-                return ! rollingStateEntity.Get<RollingState>(_world).IsRolling;
+                return ! rollingStateEntity.Get<RollingState>().IsRolling;
             return false;
         }
     }
