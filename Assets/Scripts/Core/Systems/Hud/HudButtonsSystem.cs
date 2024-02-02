@@ -32,10 +32,10 @@ namespace FunnySlots
         }
 
         private void SendBackToMenuEvent() => 
-            _world.NewEntity().Set<BackToMenuEvent>();
+            _world.Create<BackToMenuEvent>();
 
         private void SendStartRollEvent() => 
-            _world.NewEntity().Set<StartRollEvent>();
+            _world.Create<StartRollEvent>();
 
         private bool CanRoll()
         {

@@ -17,8 +17,7 @@ namespace FunnySlots
 
         public void Init(IEcsSystems systems)
         {
-            _rollingStateEntity = _world.NewEntity();
-            _rollingStateEntity.Set<RollingState>();
+            _world.Create<RollingState>().IsRolling = false;
         }
 
         public void Run(IEcsSystems systems)

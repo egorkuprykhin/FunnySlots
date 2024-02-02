@@ -38,6 +38,6 @@ namespace FunnySlots
         }
 
         private void DeleteTargetPosition(int cardEntity) => 
-            cardEntity.Del<CardTargetPosition>();
+            cardEntity.Delete<CardTargetPosition>();
     }
 }

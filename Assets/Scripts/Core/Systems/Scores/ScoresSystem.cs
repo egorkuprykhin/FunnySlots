@@ -18,7 +18,7 @@ namespace FunnySlots
 
         public void Init(IEcsSystems systems)
         {
-            InitScoresEntity();
+            InitScores();
             InitHudScoresView();
         }
 
@@ -44,13 +44,10 @@ namespace FunnySlots
         }
 
         private void DeleteAddScoresEvent(int addScoreEntity) => 
-            addScoreEntity.Del<AddScoresEvent>();
+            addScoreEntity.Delete<AddScoresEvent>();
 
-        private void InitScoresEntity()
-        {
-            _scoresEntity = _world.NewEntity();
-            _scoresEntity.Get<Scores>().Value = 0;
-        }
+        private void InitScores() => 
+            _world.Create<Scores>().Value = 0;
 
         private void InitHudScoresView()
         {

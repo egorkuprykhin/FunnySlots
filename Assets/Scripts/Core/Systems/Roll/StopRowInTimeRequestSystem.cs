@@ -51,7 +51,7 @@ namespace FunnySlots
             entity.Get<StopRowInTime>().Timer > entity.Get<StopRowInTime>().StopTime;
 
         private void ClearMovingRow(int movingCardsRowEntity) => 
-            movingCardsRowEntity.Del<StopRowInTime>();
+            movingCardsRowEntity.Delete<StopRowInTime>();
 
         private bool CardsInSameRow(int cardEntity, int targetMovingRowEntity) => 
             cardEntity.Get<CardData>().Row == targetMovingRowEntity.Get<StopRowInTime>().Row;

@@ -14,10 +14,10 @@ namespace FunnySlots
         
         public void Run(IEcsSystems systems)
         {
-            foreach (var winCombinationEvent in _winCombinationEvent.Value)
+            foreach (var winCombinationEventEntity in _winCombinationEvent.Value)
             {
                 _world.Create<WinCombinationIdEvent>().WinnerId = CalculateWinCombinationId();
-                _world.Delete<SelectWinCombinationEvent>(winCombinationEvent);
+                winCombinationEventEntity.Delete<SelectWinCombinationEvent>();
             }
         }
         

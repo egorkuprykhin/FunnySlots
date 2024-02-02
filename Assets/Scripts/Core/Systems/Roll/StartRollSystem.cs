@@ -27,16 +27,12 @@ namespace FunnySlots
                 StartRollCards();
                 PlayRollSound();
                 
-                startRollEvent.Del<StartRollEvent>();
+                startRollEvent.Delete<StartRollEvent>();
             }
         }
 
-        private void PlayRollSound()
-        {
-            ref var playSoundEvent = ref _world.NewEntity().Get<SoundEvent>();
-            playSoundEvent.Type = SoundEventType.RollStarted;
-            playSoundEvent.NeedPlay = true;
-        }
+        private void PlayRollSound() => 
+            _world.Create<PlaySoundEvent>().EventType = SoundEventType.RollStarted;
 
         private async void CreateStopRowTimingsAndEntities()
         {
@@ -49,28 +45,34 @@ namespace FunnySlots
                 var stoppingTime = CalculateStopTimingForRow(row, rollingTimeSeed, stoppingTimeSeed);
                 
                 CreateStopRowInTimeEntity(row, stoppingTime);
-                
             }
 
-            float delay = rollingTimeSeed + stoppingTimeSeed * _configuration.Value.FieldSize.x;
-            int delayMs = Mathf.CeilToInt(delay * 1000f);
+            int delayMs = GetRollingTimeDelayMs(rollingTimeSeed, stoppingTimeSeed);
             
             await UniTask.Delay(delayMs);
             await WaitUntilAllCardsStopped();
 
-            if (_world.Value.IsAlive())
-            {
-                StopRollSound();
-                _world.NewEntity().Set<StopRollEvent>();
-            }
+            StopRoll();
         }
 
-        private void StopRollSound()
+        private int GetRollingTimeDelayMs(float rollingTimeSeed, float stoppingTimeSeed)
         {
-            ref var playSoundEvent = ref _world.NewEntity().Get<SoundEvent>();
-            playSoundEvent.Type = SoundEventType.RollStopped;
-            playSoundEvent.NeedPlay = false;
+            float delay = rollingTimeSeed + stoppingTimeSeed * _configuration.Value.FieldSize.x;
+            int delayMs = Mathf.CeilToInt(delay * 1000f);
+            return delayMs;
         }
+
+        private void StopRoll()
+        {
+            if (!_world.Value.IsAlive()) 
+                return;
+            
+            StopRollSound();
+            _world.Create<StopRollEvent>();
+        }
+
+        private void StopRollSound() => 
+            _world.Create<PlaySoundEvent>().EventType = SoundEventType.RollStopped;
 
         private async UniTask WaitUntilAllCardsStopped() =>
             await UniTask.WaitUntil(() =>
@@ -90,11 +92,11 @@ namespace FunnySlots
 
         private void CreateStopRowInTimeEntity(int row, float stopTime)
         {
-            int rowEntity = _world.NewEntity();
+            ref var stopRowInTime = ref _world.Create<StopRowInTime>();
             
-            rowEntity.Get<StopRowInTime>().Row = row;
-            rowEntity.Get<StopRowInTime>().StopTime = stopTime;
-            rowEntity.Get<StopRowInTime>().Timer = 0;
+            stopRowInTime.Row = row;
+            stopRowInTime.StopTime = stopTime;
+            stopRowInTime.Timer = 0;
         }
 
         private float CalculateStopTimingForRow(int row, float rollingTime, float stoppingTime)

@@ -26,7 +26,7 @@ namespace FunnySlots
         }
 
         private void ClearDestroyEvent(int cardEntity) => 
-            cardEntity.Del<DestroyCardEvent>();
+            cardEntity.Delete<DestroyCardEvent>();
 
         private void DestroyCardView(int cardEntity) => 
             Object.Destroy(cardEntity.Get<CardViewRef>().CardView.gameObject);

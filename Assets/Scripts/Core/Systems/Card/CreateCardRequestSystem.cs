@@ -29,6 +29,13 @@ namespace FunnySlots
 
         private void CreateNewCardAboveHighest(ref CardData highestCardData)
         {
+            int createdCardEntity = InitCardWithHighestCardData(highestCardData);
+
+            createdCardEntity.Set<CreateCardEvent>();
+        }
+
+        private int InitCardWithHighestCardData(CardData highestCardData)
+        {
             int createdCardEntity = _world.NewEntity();
             
             ref var cardCreationData = ref createdCardEntity.Get<CardData>();
@@ -38,7 +45,7 @@ namespace FunnySlots
             cardCreationData.Row = highestCardData.Row;
             cardCreationData.IsMoving = highestCardData.IsMoving;
 
-            createdCardEntity.Set<CreateCardEvent>();
+            return createdCardEntity;
         }
     }
 }

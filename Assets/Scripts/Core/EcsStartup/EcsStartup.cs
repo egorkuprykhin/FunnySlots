@@ -35,46 +35,44 @@ namespace FunnySlots {
 
             _coreFactory = new CoreFactory(Configuration);
             _combinationsService = new CombinationService();
-            _fieldPositionsService = new FieldPositionsService(Configuration, sharedData);
+            _fieldPositionsService = new FieldPositionsService(Configuration);
             _cardInitializeDataService = new CardsInitializeDataService(Configuration.CardsData);
 
             _world = new EcsWorld ();
             
-            EcsExtensionsService.World = _world;
-            
+            EcsEntityExtensions.World = _world;
+
             _systems = new EcsSystems (_world, sharedData);
             _systems
-                .Add (new InitWorldSystem ())
-                .Add (new InitCameraSystem ())
-                .Add (new InitFieldMaskSystem ())
-                .Add (new SharedDataUpdateSystem ())
-                .Add (new SoundSystem ())
+                .Add <InitWorldSystem>()
+                .Add <InitCameraSystem>()
+                .Add <InitFieldMaskSystem>()
+                .Add <SoundSystem>()
                 
-                .Add (new CreateCardSystem ())
-                .Add (new MoveCardSystem ())
+                .Add <CreateCardSystem>()
+                .Add <MoveCardSystem>()
+                .Add <WatchHighestCardSystem>()
                 
-                .Add (new WatchHighestCardSystem ())
+                .Add <HudButtonsSystem>()
+                .Add <RollingStateWatcherSystem>()
+                .Add <MetaMediatorSystem>()
+                .Add <CleanCombinationsSystem>()
                 
-                .Add (new HudButtonsSystem ())
+                .Add <StartRollSystem>()
+                .Add <StopCardInTargetPositionSystem>()
+                .Add <CreateCardRequestSystem>()
                 
-                .Add(new RollingStateWatcherSystem ())
-                .Add(new MetaMediatorSystem ())
+                .Add <PrepareCombinationSystem>()
+                .Add <SelectWinCombinationSystem>()
+                .Add <WinCombinationSystem>()
                 
-                .Add (new StartRollSystem ())
-                .Add (new StopCardInTargetPositionSystem ())
-                .Add (new CreateCardRequestSystem ())
+                .Add <UpdateViewPositionSystem>()
+                .Add <ScoresSystem>()
                 
-                .Add( new PrepareCombinationSystem ())
-                .Add( new SelectWinCombinationSystem ())
-                .Add( new WinCombinationSystem ())
+                .Add <DestroyCardRequestSystem>()
+                .Add <StopRowInTimeRequestSystem>()
                 
-                .Add (new UpdateViewPositionSystem ())
-                .Add (new ScoresSystem ())
-                
-                .Add (new DestroyCardRequestSystem ())
-                .Add (new StopRowInTimeRequestSystem ())
-                
-                .Add(new DestroyCardSystem ())
+                .Add<DestroyCardSystem>()
                 
                 
                 // register additional worlds here, for example:
@@ -85,13 +83,15 @@ namespace FunnySlots {
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
 #endif
                 
-                .Inject(Configuration, SceneData)
+                .Inject(_stateMachine)
+                
+                .Inject(SceneData)
+                .Inject(Configuration)
                 
                 .Inject(_coreFactory)
                 .Inject(_cardInitializeDataService)
                 .Inject(_fieldPositionsService)
                 .Inject(_combinationsService)
-                .Inject(_stateMachine)
                 
                 .InjectUgui(UguiEmitter)
                 

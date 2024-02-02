@@ -14,13 +14,13 @@ namespace FunnySlots
         
         public void Run(IEcsSystems systems)
         {
-            foreach (int stopRollEvent in _stopRollEvent.Value)
+            foreach (int stopRollEventEntity in _stopRollEvent.Value)
             {
                 SetCombinationCards();
                 
                 _world.Create<SelectWinCombinationEvent>();
                 
-                _world.Delete<StopRollEvent>(stopRollEvent);
+                stopRollEventEntity.Delete<StopRollEvent>();
             }
         }
 

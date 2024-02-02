@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 
 namespace FunnySlots
 {
-    public static class EcsExtensionsService
+    public static class EcsEntityExtensions
     {
         public static EcsWorld World { get; set; }
 
@@ -12,9 +12,6 @@ namespace FunnySlots
         
         public static ref TComponent Create<TComponent>(this EcsWorldInject world) where TComponent : struct, IComponent => 
             ref world.Value.NewEntity().Get<TComponent>();
-
-        public static void Delete<TComponent>(this EcsWorldInject world, int entity) where TComponent : struct, IComponent => 
-            world.Value.GetPool<TComponent>().Del(entity);
 
         public static bool Has<TComponent>(this int entity) where TComponent : struct, IComponent => 
             World.GetPool<TComponent>().Has(entity);
@@ -37,7 +34,7 @@ namespace FunnySlots
                 ecsPool.Add(entity);
         }
 
-        public static void Del<TComponent>(this int entity) where TComponent : struct, IComponent => 
+        public static void Delete<TComponent>(this int entity) where TComponent : struct, IComponent => 
             World.GetPool<TComponent>().Del(entity);
     }
 }

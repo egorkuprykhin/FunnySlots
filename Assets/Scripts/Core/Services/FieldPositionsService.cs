@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
@@ -9,7 +6,6 @@ namespace FunnySlots
     public class FieldPositionsService
     {
         private readonly Configuration _configuration;
-        private readonly SharedData _sharedData;
 
         private Vector2 _minFieldBorders;
         private Vector2 _MaxFieldBorders;
@@ -19,10 +15,9 @@ namespace FunnySlots
         private Vector2 _oneCellUpOffset => new(0, _cellSize.y);
 
 
-        public FieldPositionsService(Configuration configuration, SharedData sharedData)
+        public FieldPositionsService(Configuration configuration)
         {
             _configuration = configuration;
-            _sharedData = sharedData;
 
             InitFieldBorders();
         }
@@ -70,23 +65,6 @@ namespace FunnySlots
         }
 
         private float CellPosition(int p, int size) => p + 0.5f - 0.5f * size;
-
-
-        [Obsolete]
-        public List<int> GetAllHorizontalCardsByCard(int entity)
-        {
-            List<int> combinationCards = new List<int>();
-            
-            var cardPos = _sharedData.CardsToPositions[entity];
-            
-            while (_sharedData.HasPosition(cardPos))
-            {
-                combinationCards.Add(_sharedData.PositionsToCards[cardPos]);
-                cardPos.x += _configuration.CellSize.x;
-            }
-
-            return combinationCards.OrderBy( card => _sharedData.CardsToPositions[card].x).ToList();
-        }
 
         public float GetCameraSize() => 
             _cellSize.x * (_fieldSize.x + 1) + _configuration.CameraPadding * 2;

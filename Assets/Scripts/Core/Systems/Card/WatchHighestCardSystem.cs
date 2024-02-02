@@ -26,7 +26,7 @@ namespace FunnySlots
 
             if (potentialHighestCardInRow != currentHighestCardInRow)
             {
-                currentHighestCardInRow.Del<HighestCardInRow>();
+                currentHighestCardInRow.Delete<HighestCardInRow>();
                 potentialHighestCardInRow.Get<HighestCardInRow>().Row = row;
             }
         }

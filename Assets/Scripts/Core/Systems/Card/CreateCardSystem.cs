@@ -29,6 +29,6 @@ namespace FunnySlots
             cardEntity.Get<CardViewRef>().CardView = instance;
 
         private void ClearCreateEvent(int cardEntity) => 
-            cardEntity.Del<CreateCardEvent>();
+            cardEntity.Delete<CreateCardEvent>();
     }
 }
