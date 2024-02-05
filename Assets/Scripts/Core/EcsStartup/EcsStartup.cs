@@ -6,7 +6,8 @@ using Leopotam.EcsLite.Unity.Ugui;
 using UnityEngine;
 using VContainer;
 
-namespace FunnySlots {
+namespace FunnySlots 
+{
     public sealed class EcsStartup : MonoBehaviour
     {
         private StateMachine _stateMachine;
@@ -47,6 +48,7 @@ namespace FunnySlots {
                 .Add <InitWorldSystem>()
                 .Add <InitCameraSystem>()
                 .Add <InitFieldMaskSystem>()
+                .Add <InitScoresSystem>()
                 .Add <SoundSystem>()
                 
                 .Add <CreateCardSystem>()

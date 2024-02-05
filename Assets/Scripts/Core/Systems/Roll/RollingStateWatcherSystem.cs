@@ -8,13 +8,12 @@ namespace FunnySlots
     {
         private EcsFilterInject<Inc<StartRollEvent>> _startRollEvents;
         private EcsFilterInject<Inc<StopRollEvent>> _stopRollEvents;
+        private EcsFilterInject<Inc<RollingState>> _rollingState;
 
         private EcsCustomInject<Configuration> _configuration;
 
         private EcsWorldInject _world;
         
-        private int _rollingStateEntity;
-
         public void Init(IEcsSystems systems)
         {
             _world.Create<RollingState>().IsRolling = false;
@@ -22,21 +21,22 @@ namespace FunnySlots
 
         public void Run(IEcsSystems systems)
         {
-            foreach (var startRollEventEntity in _startRollEvents.Value) 
-                SetRollingState(true);
+            foreach (var startRollEventEntity in _startRollEvents.Value)
+            foreach (var rollingStateEntity in _rollingState.Value)
+                SetRollingState(rollingStateEntity,true);
             
             foreach (var stopRollEventEntity in _stopRollEvents.Value) 
-                ResetRollingStateAfterDelay();
+            foreach (var rollingStateEntity in _rollingState.Value)
+                ResetRollingStateAfterDelay(rollingStateEntity);
         }
 
-        private void SetRollingState(bool rollingState) => 
-            _rollingStateEntity.Get<RollingState>().IsRolling = rollingState;
-
-        private async void ResetRollingStateAfterDelay()
+        private async void ResetRollingStateAfterDelay(int rollingStateEntity)
         {
-            await UniTask.Delay(_configuration.Value.WinTimeMs);
-
-            SetRollingState(false);
+            await UniTask.Delay(_configuration.Value.WinDelayMs);
+            SetRollingState(rollingStateEntity, false);
         }
+
+        private void SetRollingState(int rollingStateEntity, bool rollingState) => 
+            rollingStateEntity.Get<RollingState>().IsRolling = rollingState;
     }
 }
