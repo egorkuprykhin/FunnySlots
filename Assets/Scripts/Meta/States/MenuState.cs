@@ -32,6 +32,13 @@ namespace States
             _sceneData.MenuCamera.gameObject.SetActive(false);
         }
 
+        
+        public void StartGame() => 
+            PlayGameButtonPressed();
+
+        public void ShowPolicy() => 
+            ShowPolicyButtonPressed();
+
         private void PlayGameButtonPressed()
         {
             _stateMachine.Enter<GameplayState>();

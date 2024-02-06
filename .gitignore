@@ -77,3 +77,4 @@ crashlytics-build.properties
 # Rider cache directory
 /.idea
 ProjectSettings/SceneTemplateSettings.json
+Builds_BurstDebugInformation_DoNotShip

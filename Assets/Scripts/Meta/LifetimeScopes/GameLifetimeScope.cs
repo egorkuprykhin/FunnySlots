@@ -14,6 +14,7 @@ namespace LifetimeScopes
     {
         public GameSceneData GameSceneData;
         public GlobalConfiguration GlobalConfiguration;
+        public ProcessDeepLinkMngr DeepLinkMngr;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -33,6 +34,8 @@ namespace LifetimeScopes
             builder.RegisterComponent<ColorPrepareService>(GameSceneData.ColorPrepareService);
 
             builder.RegisterInstance(GlobalConfiguration);
+
+            builder.RegisterComponent(DeepLinkMngr);
         }
     }
 }

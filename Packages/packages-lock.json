@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "appsflyer-unity-plugin": {
+      "version": "https://github.com/AppsFlyerSDK/appsflyer-unity-plugin.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6e1e828e002770c0fe9faa4012137922b6ef3d50"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
