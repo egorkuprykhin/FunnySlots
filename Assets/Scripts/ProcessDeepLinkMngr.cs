@@ -1,3 +1,5 @@
+using System;
+using AppsFlyerSDK;
 using States;
 using UnityEngine;
 using VContainer;
@@ -13,7 +15,7 @@ public class ProcessDeepLinkMngr : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;                
-            Application.deepLinkActivated += onDeepLinkActivated;
+            AppsFlyer.OnDeepLinkReceived += AppsFlyerOnDeepLinkReceived;
             if (!string.IsNullOrEmpty(Application.absoluteURL))
             {
                 // Cold start and Application.absoluteURL not null so process Deep Link.
@@ -28,7 +30,11 @@ public class ProcessDeepLinkMngr : MonoBehaviour
             Destroy(gameObject);
         }
     }
- 
+
+    private void AppsFlyerOnDeepLinkReceived(object sender, EventArgs e)
+    {
+    }
+
     private void onDeepLinkActivated(string url)
     {
         // Update DeepLink Manager global variable, so URL can be accessed from anywhere.

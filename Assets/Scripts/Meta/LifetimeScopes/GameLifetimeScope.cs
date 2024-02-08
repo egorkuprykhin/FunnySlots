@@ -1,5 +1,6 @@
 using EntryPoint;
 using FSM;
+using FunnySlots;
 using SceneData;
 using Scripts.Configuration;
 using Services;
@@ -14,7 +15,9 @@ namespace LifetimeScopes
     {
         public GameSceneData GameSceneData;
         public GlobalConfiguration GlobalConfiguration;
-        public ProcessDeepLinkMngr DeepLinkMngr;
+        
+        public AppsFlyerManager AppsFlyerManager;
+        public DeepLinkScreen DeepLinkScreen;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -35,7 +38,8 @@ namespace LifetimeScopes
 
             builder.RegisterInstance(GlobalConfiguration);
 
-            builder.RegisterComponent(DeepLinkMngr);
+            builder.RegisterComponent(AppsFlyerManager);
+            builder.RegisterComponent(DeepLinkScreen);
         }
     }
 }
