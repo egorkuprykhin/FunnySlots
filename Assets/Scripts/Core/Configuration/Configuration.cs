@@ -12,8 +12,6 @@ namespace FunnySlots
         
         public float CameraPadding;
 
-        public int CellsOffsetToDestroyCard;
-
         public Vector2 CardMoveSpeed;
 
         public Vector2 RollingTimeRange;
@@ -21,8 +19,6 @@ namespace FunnySlots
 
         public int WinDelayMs;
         
-        public int MinCombinationX;
-        public int MinCombinationY;
         public int CombinationScore;
 
         [Header("Prefabs")]
@@ -30,10 +26,11 @@ namespace FunnySlots
         public CardWinFrameView CardWinFrameView;
         public ScoresView ScoresView;
         public MaskView MaskView;
-
+        public AudioSourceView AudioSourceView;
+        
         [Header("Cards")]
         public CardsData CardsData;
-        
+
         [Header("Sounds")]
         public SoundData Sounds;
     }

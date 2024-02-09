@@ -7,5 +7,7 @@ namespace Scripts.Configuration
     {
         public string GameSceneName;
         public Color MenuColor;
+        public float MenuBackSoundVolume;
+        public float GameBackSoundVolume;
     }
 }

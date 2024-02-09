@@ -1,5 +1,6 @@
 using FSM;
 using SceneData;
+using Scripts.Configuration;
 using UnityEngine;
 using VContainer;
 using View;
@@ -10,6 +11,7 @@ namespace States
     {
         [Inject] private readonly StateMachine _stateMachine;
         [Inject] private readonly GameSceneData _sceneData;
+        [Inject] private readonly GlobalConfiguration _configuration;
 
         [Inject] private readonly PolicyScreenView _policyScreenView;
         [Inject] private readonly MenuView _menuView;
@@ -18,7 +20,11 @@ namespace States
         public void Enter()
         {
             _sceneData.MenuCamera.gameObject.SetActive(true);
-            _sceneData.BackSoundAudioSource.Play();
+
+            _sceneData.BackSoundAudioSource.volume = _configuration.MenuBackSoundVolume;
+            if (!_sceneData.BackSoundAudioSource.isPlaying)
+                _sceneData.BackSoundAudioSource.Play();
+
             _menuView.Show();
             
             SubscribeMenuButtons();
@@ -28,7 +34,7 @@ namespace States
         public void Exit()
         {
             _menuView.Hide();
-            _sceneData.BackSoundAudioSource.Stop();
+            _sceneData.BackSoundAudioSource.volume = _configuration.GameBackSoundVolume;
             _sceneData.MenuCamera.gameObject.SetActive(false);
         }
 

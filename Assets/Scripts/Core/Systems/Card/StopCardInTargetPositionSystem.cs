@@ -1,3 +1,4 @@
+using FunnySlots.Sound;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -12,13 +13,19 @@ namespace FunnySlots
 
         public void Run(IEcsSystems systems)
         {
+            bool playSound = false;
+            
             foreach (int cardEntity in _cardsToStop.Value)
-                
+            
                 if (CardInTargetPosition(cardEntity))
                 {
                     StopCardInTargetPosition(cardEntity);
                     DeleteTargetPosition(cardEntity);
+                    playSound = true;
                 }
+
+            if (playSound) 
+                PlayStopRowSound();
         }
 
         private bool CardInTargetPosition(int cardEntity)
@@ -36,6 +43,9 @@ namespace FunnySlots
             cardData.Position = cardEntity.Get<CardTargetPosition>().Value;
             cardData.IsMoving = false;
         }
+
+        private void PlayStopRowSound() => 
+            _world.Create<PlaySoundEvent>().EventType = SoundEventType.RowStopped;
 
         private void DeleteTargetPosition(int cardEntity) => 
             cardEntity.Delete<CardTargetPosition>();

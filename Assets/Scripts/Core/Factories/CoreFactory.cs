@@ -8,6 +8,7 @@ namespace FunnySlots
         private void InitFactories(Configuration configuration)
         {
             InitFactory(new MaskFactory(configuration));
+            InitFactory(new AudioSourceViewFactory(configuration));
             
             InitFactoryWithPayload(new CardFactory(configuration));
             InitFactoryWithPayload(new ScoresFactory(configuration));

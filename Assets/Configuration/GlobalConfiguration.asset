@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameSceneName: FunnySlots
   MenuColor: {r: 0.91634035, g: 0.9339623, b: 0.885502, a: 1}
+  MenuBackSoundVolume: 0.65
+  GameBackSoundVolume: 0.25

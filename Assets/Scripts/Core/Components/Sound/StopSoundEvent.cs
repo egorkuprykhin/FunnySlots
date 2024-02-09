@@ -1,4 +1,4 @@
-namespace FunnySlots.Systems
+namespace FunnySlots
 {
     public struct StopSoundEvent : IComponent
     {

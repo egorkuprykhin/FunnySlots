@@ -1,5 +1,5 @@
 using FSM;
-using FunnySlots.Systems;
+using FunnySlots;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Unity.Ugui;
@@ -49,7 +49,7 @@ namespace FunnySlots
                 .Add <InitCameraSystem>()
                 .Add <InitFieldMaskSystem>()
                 .Add <InitScoresSystem>()
-                .Add <SoundSystem>()
+                .Add <PlaySoundSystem>()
                 
                 .Add <CreateCardSystem>()
                 .Add <MoveCardSystem>()
@@ -75,6 +75,7 @@ namespace FunnySlots
                 .Add <StopRowInTimeRequestSystem>()
                 
                 .Add<DestroyCardSystem>()
+                .Add<CleanFinishedSoundSystem>()
                 
                 
                 // register additional worlds here, for example:
